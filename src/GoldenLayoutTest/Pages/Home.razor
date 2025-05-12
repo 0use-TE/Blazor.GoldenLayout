@@ -1,0 +1,51 @@
+﻿@page "/"
+@using Blazor.GoldenLayout
+
+<PageTitle>Home</PageTitle>
+
+<h1>Hello, world!</h1>
+
+Welcome to your new app.
+
+@code{
+
+	protected override Task OnInitializedAsync()
+	{
+		var layoutConfig = new GoldenLayoutConfig
+		{
+			Content = new List<ContentItem>
+			 {
+				 new ContentItem
+				 {
+					   ContentType=ContentType.Component,
+					   ComponentName="example",
+						ComponentState=new Dictionary<string, string>
+						{
+						 ["text"]="example1",
+						}
+				 },
+				 	 new ContentItem
+				 {
+					   ContentType=ContentType.Component,
+					   ComponentName="example",
+						ComponentState=new Dictionary<string, string>
+						{
+						 ["text"]="example2",
+						}
+				 },
+				 	 new ContentItem
+				 {
+					   ContentType=ContentType.Component,
+					   ComponentName="example",
+						ComponentState=new Dictionary<string, string>
+						{
+						 ["text"]="example3",
+						}
+					  }
+			}
+		};
+
+
+		return base.OnInitializedAsync();
+	}
+}
