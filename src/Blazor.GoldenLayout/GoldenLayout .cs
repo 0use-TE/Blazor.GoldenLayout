@@ -9,6 +9,9 @@ namespace Blazor.GoldenLayout
 {
 	public class GoldenLayout
 	{
+		public GoldenLayout(GoldenLayoutConfiguration configuration, IJSObjectReference container)
+		{
 
+		}
 	}
 }
