@@ -19,7 +19,7 @@ namespace Blazor.GoldenLayout
 		/// Corresponds to JavaScript's `hasHeaders`.
 		/// </summary>
 		[JsonPropertyName("hasHeaders")]
-		public bool HasHeaders { get; set; } = true;
+		public bool ? HasHeaders { get; set; } 
 
 		/// <summary>
 		/// Constrains the drag area to the layout's container. Default: true.
@@ -27,14 +27,14 @@ namespace Blazor.GoldenLayout
 		/// Corresponds to JavaScript's `constrainDragToContainer`.
 		/// </summary>
 		[JsonPropertyName("constrainDragToContainer")]
-		public bool ConstrainDragToContainer { get; set; } = true;
+		public bool? ConstrainDragToContainer { get; set; } 
 
 		/// <summary>
 		/// Allows users to rearrange the layout by dragging tabs. Default: true.
 		/// Corresponds to JavaScript's `reorderEnabled`.
 		/// </summary>
 		[JsonPropertyName("reorderEnabled")]
-		public bool ReorderEnabled { get; set; } = true;
+		public bool? ReorderEnabled { get; set; } 
 
 		/// <summary>
 		/// Allows selecting items by clicking their headers. Default: false.
@@ -42,7 +42,7 @@ namespace Blazor.GoldenLayout
 		/// Corresponds to JavaScript's `selectionEnabled`.
 		/// </summary>
 		[JsonPropertyName("selectionEnabled")]
-		public bool SelectionEnabled { get; set; } = false;
+		public bool ? SelectionEnabled { get; set; }
 
 		/// <summary>
 		/// Determines whether the entire stack is popped out when clicking the popout icon. Default: false.
@@ -50,7 +50,7 @@ namespace Blazor.GoldenLayout
 		/// Corresponds to JavaScript's `popoutWholeStack`.
 		/// </summary>
 		[JsonPropertyName("popoutWholeStack")]
-		public bool PopoutWholeStack { get; set; } = false;
+		public bool? PopoutWholeStack { get; set; }
 
 		/// <summary>
 		/// Specifies whether an error is thrown when a popout is blocked by the browser. Default: true.
@@ -58,7 +58,7 @@ namespace Blazor.GoldenLayout
 		/// Corresponds to JavaScript's `blockedPopoutsThrowError`.
 		/// </summary>
 		[JsonPropertyName("blockedPopoutsThrowError")]
-		public bool BlockedPopoutsThrowError { get; set; } = true;
+		public bool? BlockedPopoutsThrowError { get; set; }
 
 		/// <summary>
 		/// Specifies whether all popouts are closed when the parent page is closed. Default: true.
@@ -66,28 +66,28 @@ namespace Blazor.GoldenLayout
 		/// Corresponds to JavaScript's `closePopoutsOnUnload`.
 		/// </summary>
 		[JsonPropertyName("closePopoutsOnUnload")]
-		public bool ClosePopoutsOnUnload { get; set; } = true;
+		public bool? ClosePopoutsOnUnload { get; set; } 
 
 		/// <summary>
 		/// Specifies whether the popout icon is displayed in the header bar. Default: true.
 		/// Corresponds to JavaScript's `showPopoutIcon`.
 		/// </summary>
 		[JsonPropertyName("showPopoutIcon")]
-		public bool ShowPopoutIcon { get; set; } = true;
+		public bool ?ShowPopoutIcon { get; set; } 
 
 		/// <summary>
 		/// Specifies whether the maximize icon is displayed in the header bar. Default: true.
 		/// Corresponds to JavaScript's `showMaximiseIcon`.
 		/// </summary>
 		[JsonPropertyName("showMaximiseIcon")]
-		public bool ShowMaximiseIcon { get; set; } = true;
+		public bool? ShowMaximiseIcon { get; set; } 
 
 		/// <summary>
 		/// Specifies whether the close icon is displayed in the header bar. Default: true.
 		/// Corresponds to JavaScript's `showCloseIcon`.
 		/// </summary>
 		[JsonPropertyName("showCloseIcon")]
-		public bool ShowCloseIcon { get; set; } = true;
+		public bool? ShowCloseIcon { get; set; } 
 	}
 
 }

@@ -23,20 +23,25 @@ namespace Blazor.GoldenLayout
             moduleTask = new(() => jsRuntime.InvokeAsync<IJSObjectReference>(
                 "import", "./_content/Blazor.GoldenLayout/goldenlayoutinterop.js").AsTask());
         }
-        public async Task CreateGoldenLayoutAsync(GoldenLayoutConfiguration configuration,ElementReference container)
-        {
-            var  module=await moduleTask.Value;
-            // 自定义 JsonSerializerOptions 忽略 null
-            var options = new JsonSerializerOptions
-            {
-                DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
-            };
 
-            // 序列化为 JSON 并传递给 JS
-            var jsonConfig = JsonSerializer.Serialize(configuration, options);
-            goldLayout =await module.InvokeAsync<IJSObjectReference>("createGoldenLayout",jsonConfig,container);
-        }
-        public async Task InitAsync()
+		public async Task CreateGoldenLayoutAsync(GoldenLayoutConfiguration configuration, ElementReference container)
+		{
+			var module = await moduleTask.Value;
+
+			// 配置 JsonSerializerOptions，忽略 null 值
+			var options = new JsonSerializerOptions
+			{
+				DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
+				PropertyNamingPolicy = JsonNamingPolicy.CamelCase 
+			};
+			// 序列化为 JSON 字符串，忽略 null 值
+			string jsonConfig = JsonSerializer.Serialize(configuration, options);
+			// 反序列化为动态对象，保留非 null 属性
+			object configObject = JsonSerializer.Deserialize<object>(jsonConfig, options)!;
+			// 传递动态对象和 container 给 JavaScript
+			goldLayout = await module.InvokeAsync<IJSObjectReference>("createGoldenLayout", configObject, container);
+		}
+		public async Task InitAsync()
         {
             if(goldLayout == null)
             {

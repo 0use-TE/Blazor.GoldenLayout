@@ -18,27 +18,27 @@ namespace Blazor.GoldenLayout
 		/// Corresponds to JavaScript's `close`.
 		/// </summary>
 		[JsonPropertyName("close")]
-		public string Close { get; set; } = "close";
+		public string? Close { get; set; } 
 
 		/// <summary>
 		/// The label for the maximize button. Default: "maximise".
 		/// Corresponds to JavaScript's `maximise`.
 		/// </summary>
 		[JsonPropertyName("maximise")]
-		public string Maximise { get; set; } = "maximise";
+		public string ?Maximise { get; set; }
 
 		/// <summary>
 		/// The label for the minimize button. Default: "minimise".
 		/// Corresponds to JavaScript's `minimise`.
 		/// </summary>
 		[JsonPropertyName("minimise")]
-		public string Minimise { get; set; } = "minimise";
+		public string? Minimise { get; set; }
 
 		/// <summary>
 		/// The label for the popout button. Default: "open in new window".
 		/// Corresponds to JavaScript's `popout`.
 		/// </summary>
 		[JsonPropertyName("popout")]
-		public string Popout { get; set; } = "open in new window";
+		public string? Popout { get; set; } 
 	}
 }

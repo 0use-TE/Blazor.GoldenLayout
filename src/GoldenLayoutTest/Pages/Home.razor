@@ -3,50 +3,57 @@
 @inject IJSRuntime _jsRuntime
 <PageTitle>Home</PageTitle>
 
-<div @ref=elementReference></div>
+<div>主页</div>
+<div @ref=elementReference style="width:1000px;height:1000px"></div>
 
 @code{
 
-	private GoldenLayout? goldenLayout;
-	private ElementReference elementReference;
+    private GoldenLayout? goldenLayout;
+    private ElementReference elementReference;
 
-	protected override async Task OnInitializedAsync()
-	{
-		var layoutConfig = new GoldenLayoutConfiguration
-		{
-			Content = new List<ContentItem>
-			 {
-				 new ContentItem
-				 {
-					   ContentType=ContentType.Component,
-					   ComponentName="example",
-						ComponentState=new Dictionary<string, string>
-						{
-						 ["text"]="example1",
-						}
-				 },
-				 	 new ContentItem
-				 {
-					   ContentType=ContentType.Component,
-					   ComponentName="example",
-						ComponentState=new Dictionary<string, string>
-						{
-						 ["text"]="example2",
-						}
-				 },
-				 	 new ContentItem
-				 {
-					   ContentType=ContentType.Component,
-					   ComponentName="example",
-						ComponentState=new Dictionary<string, string>
-						{
-						 ["text"]="example3",
-						}
-					  }
-			}
-		};
+    protected override async Task OnInitializedAsync()
+    {
+    }
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if(firstRender)
+        {
+            var layoutConfig = new GoldenLayoutConfiguration
+            {
+                Content = new List<ContentItem>
+    {
+        new ContentItem
+        {
+            ContentType = ContentType.Row,
+            Content = new List<ContentItem>
+            {
+                new ContentItem
+                {
+                    ContentType = ContentType.Component,
+                    ComponentName = "example",
+                    ComponentState = new Dictionary<string, string> { ["text"] = "example1" }
+                },
+                new ContentItem
+                {
+                    ContentType = ContentType.Component,
+                    ComponentName = "example",
+                    ComponentState = new Dictionary<string, string> { ["text"] = "example2" }
+                },
+                new ContentItem
+                {
+                    ContentType = ContentType.Component,
+                    ComponentName = "example",
+                    ComponentState = new Dictionary<string, string> { ["text"] = "example3" }
+                }
+            }
+        }
+    }
+            };
 
-		goldenLayout =await GoldenLayout.CreateGoldenLayout(_jsRuntime,layoutConfig,elementReference);
-		await goldenLayout.Init();
-	}
+
+            goldenLayout = await GoldenLayout.CreateGoldenLayout(_jsRuntime, layoutConfig, elementReference);
+            await goldenLayout.Init();
+            await InvokeAsync(StateHasChanged);
+        }
+    }
 }

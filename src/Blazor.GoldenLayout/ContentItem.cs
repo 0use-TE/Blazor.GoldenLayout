@@ -37,7 +37,7 @@ public class ContentItem
 	/// Corresponds to JavaScript's `type`.
 	/// </summary>
 	[JsonPropertyName("type")]
-	public ContentType ContentType { get; set; } 
+	public ContentType? ContentType { get; set; } 
 
 	/// <summary>
 	/// The name of the component, as registered in `layout.registerComponent`. Mandatory for type "component".
@@ -72,14 +72,14 @@ public class ContentItem
 	/// Corresponds to JavaScript's `width`.
 	/// </summary>
 	[JsonPropertyName("width")]
-	public int Width { get; set; }
+	public int ?Width { get; set; }
 
 	/// <summary>
 	/// The height of the item, relative to other children of its parent, in percent.
 	/// Corresponds to JavaScript's `height`.
 	/// </summary>
 	[JsonPropertyName("height")]
-	public int Height { get; set; }
+	public int ?Height { get; set; }
 
 	/// <summary>
 	/// Determines whether the item can be closed. Default: true.
@@ -87,7 +87,7 @@ public class ContentItem
 	/// Corresponds to JavaScript's `isClosable`.
 	/// </summary>
 	[JsonPropertyName("isClosable")]
-	public bool IsClosable { get; set; } = true;
+	public bool ?IsClosable { get; set; } 
 
 	/// <summary>
 	/// The title displayed on the item's tab and popout windows. Default: componentName or empty string.
@@ -101,6 +101,6 @@ public class ContentItem
 	/// Corresponds to JavaScript's `activeItemIndex`.
 	/// </summary>
 	[JsonPropertyName("activeItemIndex")]
-	public int ActiveItemIndex { get; set; } = 0;
+	public int? ActiveItemIndex { get; set; } 
 
 }
