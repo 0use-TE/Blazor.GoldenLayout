@@ -1,15 +1,16 @@
 ﻿@page "/"
 @using Blazor.GoldenLayout
-
+@inject IJSRuntime _jsRuntime
 <PageTitle>Home</PageTitle>
 
-<h1>Hello, world!</h1>
-
-Welcome to your new app.
+<div @ref=elementReference></div>
 
 @code{
 
-	protected override Task OnInitializedAsync()
+	private GoldenLayout? goldenLayout;
+	private ElementReference elementReference;
+
+	protected override async Task OnInitializedAsync()
 	{
 		var layoutConfig = new GoldenLayoutConfiguration
 		{
@@ -45,7 +46,7 @@ Welcome to your new app.
 			}
 		};
 
-
-		return base.OnInitializedAsync();
+		goldenLayout =await GoldenLayout.CreateGoldenLayout(_jsRuntime,layoutConfig,elementReference);
+		await goldenLayout.Init();
 	}
 }
