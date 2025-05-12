@@ -41,7 +41,29 @@ namespace Blazor.GoldenLayout
 			// 传递动态对象和 container 给 JavaScript
 			goldLayout = await module.InvokeAsync<IJSObjectReference>("createGoldenLayout", configObject, container);
 		}
-		public async Task InitAsync()
+
+        public async Task RegisterComponentAsync(DotNetObjectReference<GoldenLayoutContainer> dotNetObject, List<Type>? componentNameList)
+        {
+            if (componentNameList == null)
+                return;
+
+            foreach(var item in componentNameList)
+            {
+                var name = item.ToString();
+                if (goldLayout != null)
+                {
+                    if (moduleTask.IsValueCreated)
+                    {
+                        var module = await moduleTask.Value;
+                        await module.InvokeVoidAsync("registerComponent",goldLayout, dotNetObject, name );
+                    }
+
+                }
+
+            }
+        }
+     
+        public async Task InitAsync()
         {
             if(goldLayout == null)
             {

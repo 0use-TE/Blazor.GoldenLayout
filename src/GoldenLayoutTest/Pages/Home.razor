@@ -1,23 +1,21 @@
 ﻿@page "/"
 @using Blazor.GoldenLayout
-@inject IJSRuntime _jsRuntime
 <PageTitle>Home</PageTitle>
 
 <div>主页</div>
-<div @ref=elementReference style="width:1000px;height:1000px"></div>
+
+<GoldenLayoutContainer  GoldenLayoutConfiguration="layoutConfig" GoldenLayoutComponentNameList="types">
+
+</GoldenLayoutContainer>
 
 @code{
-
-    private GoldenLayout? goldenLayout;
-    private ElementReference elementReference;
-
-    protected override async Task OnAfterRenderAsync(bool firstRender)
+    private List<Type> types = new List<Type>
     {
-        if(firstRender)
+     typeof(Counter)
+    };
+    private  GoldenLayoutConfiguration layoutConfig = new GoldenLayoutConfiguration
         {
-            var layoutConfig = new GoldenLayoutConfiguration
-            {
-                Content = new List<ContentItem>
+            Content = new List<ContentItem>
     {
         new ContentItem
         {
@@ -27,30 +25,21 @@
                 new ContentItem
                 {
                     ContentType = ContentType.Component,
-                    ComponentName = "example",
-                    ComponentState = new Dictionary<string, string> { ["text"] = "example1" }
+                    ComponentName = typeof(Counter).ToString(),
                 },
                 new ContentItem
                 {
                     ContentType = ContentType.Component,
-                    ComponentName = "example",
-                    ComponentState = new Dictionary<string, string> { ["text"] = "example2" }
+                    ComponentName = typeof(Counter).ToString(),
                 },
                 new ContentItem
                 {
                     ContentType = ContentType.Component,
-                    ComponentName = "example",
-                    ComponentState = new Dictionary<string, string> { ["text"] = "example3" }
+                    ComponentName = typeof(Counter).ToString(),
                 }
             }
         }
-    }
-            };
-
-
-            goldenLayout = await GoldenLayout.CreateGoldenLayout(_jsRuntime, layoutConfig, elementReference);
-            await goldenLayout.Init();
-            await InvokeAsync(StateHasChanged);
-        }
-    }
+                }
+        };
+  
 }

@@ -22,7 +22,11 @@ namespace Blazor.GoldenLayout
 			return goldenLayout;
 		}
 
-		public async Task Init()
+        public async Task RegisterComponent(DotNetObjectReference<GoldenLayoutContainer> dotNetObject, List<Type>? componentNameList)
+		{
+			await jsInterop.RegisterComponentAsync(dotNetObject,componentNameList);
+        }
+        public async Task Init()
 		{
 			await jsInterop.InitAsync();
 		}
