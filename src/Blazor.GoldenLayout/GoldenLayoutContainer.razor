@@ -4,12 +4,7 @@
 <div @ref=elementReference style="width:1000px;height:1000px">
 
 </div>
-@foreach (var item in components)
-{
-    <div id="@item.Id" >
-        <DynamicComponent Type="item.ComponentType" />
-    </div>
-}
+
 
 @code
 {
@@ -18,8 +13,6 @@
     [Parameter]
     public List<Type>? GoldenLayoutComponentNameList { get; set; }
 
-    private List<GoldenLayoutItem> components = new();
-    private Dictionary<string, Type> componentTypeMap = new();
     private DotNetObjectReference<GoldenLayoutContainer>? _dotNetRef;
 
     private class GoldenLayoutItem
@@ -40,14 +33,6 @@
                 throw new Exception("GoldenLayoutConfiguration can not be null!");
             }
 
-            // 初始化组件类型映射
-            if (GoldenLayoutComponentNameList != null)
-            {
-                foreach (var type in GoldenLayoutComponentNameList)
-                {
-                    componentTypeMap[type.Name] = type;
-                }
-            }
 
             _dotNetRef = DotNetObjectReference.Create(this);
             goldenLayout = await GoldenLayout.CreateGoldenLayout(_jsRuntime, GoldenLayoutConfiguration, elementReference);
@@ -59,24 +44,9 @@
     }
 
     [JSInvokable]
-    public async Task RegisterComponent(string componentName, string id)
+    public async Task RegisterComponent()
     {
-        Console.WriteLine("开始创建");
-        if (!componentTypeMap.TryGetValue(componentName, out var type))
-        {
-            Console.WriteLine($"Component type not found: {componentName}");
-            return;
-        }
 
-
-        components.Add(new GoldenLayoutItem
-            {
-                ComponentType = type,
-                Id = id,
-            });
-
-        await InvokeAsync(StateHasChanged);
-        Console.WriteLine($"Created component: {id}");
     }
 
 }
