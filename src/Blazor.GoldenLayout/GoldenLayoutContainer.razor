@@ -1,6 +1,6 @@
 ﻿@using Microsoft.JSInterop
 @inject IJSRuntime _jsRuntime
-
+@inject GoldenLayoutComponent GoldenLayoutComponent
 <div @ref=elementReference style="width:1000px;height:1000px">
 
 </div>
@@ -10,8 +10,6 @@
 {
     [Parameter]
     public GoldenLayoutConfiguration? GoldenLayoutConfiguration { get; set; }
-    [Parameter]
-    public List<Type>? GoldenLayoutComponentNameList { get; set; }
 
     private DotNetObjectReference<GoldenLayoutContainer>? _dotNetRef;
 
@@ -36,7 +34,7 @@
 
             _dotNetRef = DotNetObjectReference.Create(this);
             goldenLayout = await GoldenLayout.CreateGoldenLayout(_jsRuntime, GoldenLayoutConfiguration, elementReference);
-            await goldenLayout.RegisterComponent(_dotNetRef, GoldenLayoutComponentNameList ?? new List<Type>());
+            await goldenLayout.RegisterComponent(_dotNetRef, GoldenLayoutComponent.GetAll().Values);
 
             await goldenLayout.Init();
             await InvokeAsync(StateHasChanged);

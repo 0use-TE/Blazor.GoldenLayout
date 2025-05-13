@@ -1,8 +1,10 @@
 ﻿<h3>Counter</h3>
 
-<button @onclick=Add>@aa</button>
+<h3>@Cnt</h3>
+<button @onclick=Add>增加</button>
 @code {
-	private int aa;
+	[Parameter]
+	public int Cnt { get; set; }
 
-	private void Add() => aa++;
+	private void Add() => Cnt++;
 }

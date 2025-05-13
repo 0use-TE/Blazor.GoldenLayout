@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.AspNetCore.Components.Web;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,16 +10,19 @@ namespace Blazor.GoldenLayout
 {
 	 public static class Extension
 	{
-		public static IServiceCollection RegisterGoldenLayoutServices(this IServiceCollection services, Dictionary<Type, string> components)
+		private static Dictionary<Type, string> components=new Dictionary<Type, string>();
+
+        public static IServiceCollection RegisterGoldenLayoutService(this IServiceCollection configuration, Dictionary<Type, string> components)
 		{
-			// 注册 RegisterGoldenLayout 服务，并传递组件字典
-			services.AddSingleton<RegisterGoldenLayout>(sp =>
+			Extension.components = components;
+			return configuration.AddSingleton(sp => new GoldenLayoutComponent(components));
+        }
+		public static void RegisterGoldenLayoutComponent(this IJSComponentConfiguration configuration)
+		{
+			foreach(var item in components)
 			{
-
-			});
-
-			return services;
+				configuration.RegisterForJavaScript(item.Key, item.Value);
+			}
 		}
-
-	}
+    }
 }

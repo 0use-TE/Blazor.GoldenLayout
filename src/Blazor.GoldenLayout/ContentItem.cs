@@ -51,7 +51,7 @@ public class ContentItem
 	/// Corresponds to JavaScript's `componentState`.
 	/// </summary>
 	[JsonPropertyName("componentState")]
-	public Dictionary<string, string>? ComponentState { get; set; }
+	public Dictionary<string, object>? ComponentState { get; set; }
 
 	/// <summary>
 	/// An array of child content items, allowing nested structures.

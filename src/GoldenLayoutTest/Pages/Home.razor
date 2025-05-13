@@ -4,15 +4,11 @@
 
 <div>主页</div>
 
-<GoldenLayoutContainer  GoldenLayoutConfiguration="layoutConfig" GoldenLayoutComponentNameList="types">
+<GoldenLayoutContainer  GoldenLayoutConfiguration="layoutConfig" >
 
 </GoldenLayoutContainer>
 
 @code{
-    private List<Type> types = new List<Type>
-    {
-     typeof(Counter)
-    };
     private  GoldenLayoutConfiguration layoutConfig = new GoldenLayoutConfiguration
         {
             Content = new List<ContentItem>
@@ -25,17 +21,21 @@
                 new ContentItem
                 {
                     ContentType = ContentType.Component,
-                    ComponentName = typeof(Counter).ToString(),
+                    ComponentName = "Counter",
+                    ComponentState=new Dictionary<string, object>
+                    {
+                        {"Cnt",123 }
+                    }
                 },
                 new ContentItem
                 {
                     ContentType = ContentType.Component,
-                    ComponentName = typeof(Counter).ToString(),
+                    ComponentName = "Counter",
                 },
                 new ContentItem
                 {
                     ContentType = ContentType.Component,
-                    ComponentName = typeof(Counter).ToString(),
+                    ComponentName = "Counter",
                 }
             }
         }

@@ -42,20 +42,19 @@ namespace Blazor.GoldenLayout
 			goldLayout = await module.InvokeAsync<IJSObjectReference>("createGoldenLayout", configObject, container);
 		}
 
-        public async Task RegisterComponentAsync(DotNetObjectReference<GoldenLayoutContainer> dotNetObject, List<Type>? componentNameList)
+        public async Task RegisterComponentAsync(DotNetObjectReference<GoldenLayoutContainer> dotNetObject, IEnumerable<string>? componentNameList)
         {
             if (componentNameList == null)
                 return;
 
             foreach(var item in componentNameList)
             {
-                var name = item.ToString();
                 if (goldLayout != null)
                 {
                     if (moduleTask.IsValueCreated)
                     {
                         var module = await moduleTask.Value;
-                        await module.InvokeVoidAsync("registerComponent",goldLayout, dotNetObject, name );
+                        await module.InvokeVoidAsync("registerComponent",goldLayout, dotNetObject, item);
                     }
 
                 }
