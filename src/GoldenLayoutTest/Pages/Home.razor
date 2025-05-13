@@ -2,13 +2,27 @@
 @using Blazor.GoldenLayout
 <PageTitle>Home</PageTitle>
 
-<div>主页</div>
+<h4>主页</h4>
 
-<GoldenLayoutContainer  GoldenLayoutConfiguration="layoutConfig" >
+ 
+<button @onclick=@(StateHasChanged)>测试</button>
 
+<GoldenLayoutContainer Style="width:1000px;height:800px"  @ref=goldenLayoutContainer GoldenLayoutConfiguration="layoutConfig" >
 </GoldenLayoutContainer>
 
+<GoldenLayoutSpawner GoldenLayoutContainer="goldenLayoutContainer" >
+    <GoldenLayoutSpawnerItem ContentItem="contentItem" >添加</GoldenLayoutSpawnerItem>
+</GoldenLayoutSpawner>
+
 @code{
+
+    private GoldenLayoutContainer? goldenLayoutContainer;
+    private ContentItem contentItem = new ContentItem
+        {
+            ContentType = ContentType.Component,
+            ComponentName = "Counter",
+            Title="添加"
+        };
     private  GoldenLayoutConfiguration layoutConfig = new GoldenLayoutConfiguration
         {
             Content = new List<ContentItem>
@@ -31,11 +45,19 @@
                 {
                     ContentType = ContentType.Component,
                     ComponentName = "Counter",
+                    ComponentState=new Dictionary<string, object>
+                    {
+                        {"Cnt",100 }
+                    }
                 },
                 new ContentItem
                 {
                     ContentType = ContentType.Component,
                     ComponentName = "Counter",
+                          ComponentState=new Dictionary<string, object>
+                    {
+                        {"Cnt",10 }
+                    }
                 }
             }
         }

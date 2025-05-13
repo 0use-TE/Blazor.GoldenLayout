@@ -9,22 +9,6 @@ using System.Threading.Tasks;
 
 namespace Blazor.GoldenLayout;
 
-
-
-/// <summary>
-/// Defines the possible types for a content item in GoldenLayout.
-/// Corresponds to JavaScript's `type` field values: "row", "column", "stack", "component".
-/// </summary>
-[JsonConverter(typeof(ContentTypeConverter))]
-public enum ContentType
-{
-	Row,
-	Column,
-	Stack,
-	Component
-}
-
-
 /// <summary>
 /// Represents a content item in the layout, such as a component, row, column, or stack.
 /// Corresponds to JavaScript's `content` array items.

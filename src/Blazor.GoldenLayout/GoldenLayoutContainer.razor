@@ -1,17 +1,26 @@
 ﻿@using Microsoft.JSInterop
 @inject IJSRuntime _jsRuntime
 @inject GoldenLayoutComponent GoldenLayoutComponent
-<div @ref=elementReference style="width:1000px;height:1000px">
+
+<div @ref=elementReference  style="@Style"  @attributes=@AdditionalAttributes>
 
 </div>
-
 
 @code
 {
     [Parameter]
     public GoldenLayoutConfiguration? GoldenLayoutConfiguration { get; set; }
 
+    [Parameter] public string? Style { get; set; }
+
+    [Parameter]
+    public RenderFragment? ChildContent{ get; set; }
+
+    [Parameter(CaptureUnmatchedValues = true)]
+    public Dictionary<string, object> ?AdditionalAttributes { get; set; }
+
     private DotNetObjectReference<GoldenLayoutContainer>? _dotNetRef;
+    public event Func<Task>? OnGoldenLayoutInited;
 
     private class GoldenLayoutItem
     {
@@ -19,7 +28,7 @@
         public string? Id { get; set; }
     }
 
-    private GoldenLayout? goldenLayout;
+    public GoldenLayout? goldenLayout;
     private ElementReference elementReference;
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -37,6 +46,9 @@
             await goldenLayout.RegisterComponent(_dotNetRef, GoldenLayoutComponent.GetAll().Values);
 
             await goldenLayout.Init();
+
+            OnGoldenLayoutInited?.Invoke();
+
             await InvokeAsync(StateHasChanged);
         }
     }

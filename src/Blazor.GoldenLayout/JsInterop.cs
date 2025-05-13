@@ -15,7 +15,7 @@ namespace Blazor.GoldenLayout
     public class JSInterop : IAsyncDisposable
     {
         private readonly Lazy<Task<IJSObjectReference>> moduleTask;
-        private IJSObjectReference? goldLayout;
+        public IJSObjectReference? goldLayout;
         public JSInterop(IJSRuntime jsRuntime)
         {
             if (jsRuntime== null)
@@ -71,7 +71,16 @@ namespace Blazor.GoldenLayout
             }
         await goldLayout.InvokeVoidAsync("init");
         }
-        public async ValueTask DisposeAsync()
+
+        public async Task CreateDragSource(string spawnerId, ContentItem contentItem)
+        {
+            if(moduleTask.IsValueCreated)
+            {
+                var module = await moduleTask.Value;
+                await module.InvokeVoidAsync("createDragSource", goldLayout, spawnerId, contentItem);
+            }
+        }
+		public async ValueTask DisposeAsync()
         {
             if (moduleTask.IsValueCreated)
             {

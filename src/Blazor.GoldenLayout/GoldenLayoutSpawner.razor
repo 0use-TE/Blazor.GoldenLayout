@@ -1,0 +1,40 @@
+﻿
+	@if(shouldRenderSpawner&&GoldenLayoutContainer!=null)
+	{
+<div style="@Style" @attributes=@AdditionalAttributes>
+	<CascadingValue Value="GoldenLayoutContainer.goldenLayout" >
+@ChildContent
+</CascadingValue>
+</div>
+	}
+
+@code
+{
+	[Parameter]
+	public GoldenLayoutContainer? GoldenLayoutContainer{ get; set; }
+
+	[Parameter] public string? Style { get; set; }
+	[Parameter(CaptureUnmatchedValues = true)]
+	public Dictionary<string, object>? AdditionalAttributes { get; set; }
+	[Parameter]
+	public RenderFragment ?ChildContent{ get; set; }
+
+	private bool shouldRenderSpawner;
+
+	protected override Task OnInitializedAsync()
+	{
+		if( GoldenLayoutContainer==null)
+		{
+			Console.WriteLine("GoldenLayoutContainer为Null");
+			return Task.CompletedTask;
+		}
+		GoldenLayoutContainer.OnGoldenLayoutInited += OnGoldenLayoutInited;
+		return Task.CompletedTask;
+	} 
+	private async Task OnGoldenLayoutInited()
+	{
+		shouldRenderSpawner = true;
+		await InvokeAsync(StateHasChanged);
+	}
+
+}

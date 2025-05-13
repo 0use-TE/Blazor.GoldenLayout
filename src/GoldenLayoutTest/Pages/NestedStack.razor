@@ -1,0 +1,62 @@
+﻿@page "/nestedstack"
+@using Blazor.GoldenLayout
+
+<GoldenLayoutContainer GoldenLayoutConfiguration="layoutConfig">
+</GoldenLayoutContainer>
+
+@code {
+    private GoldenLayoutConfiguration layoutConfig = new GoldenLayoutConfiguration
+    {
+     Content=new List<ContentItem>
+     {
+            new ContentItem
+            {
+                ContentType=ContentType.Stack,
+                Content=new List<ContentItem>
+                {
+                    new ContentItem
+                    {
+                         ContentType=ContentType.Stack,
+                         Title="StackA",
+                         Content=new List<ContentItem>
+                         {
+                             new ContentItem
+                             {
+                                  Title="ComponentA 1",
+                                  ContentType=ContentType.Component,
+                                  ComponentName="Counter"
+                             },
+                                 new ContentItem
+                             {
+                                  Title="ComponentA 2",
+                                  ContentType=ContentType.Component,
+                                  ComponentName="Counter"
+                             }
+                         }
+                    },
+                     new ContentItem
+                    {
+                         ContentType=ContentType.Stack,
+                         Title="StackB",
+                         Content=new List<ContentItem>
+                         {
+                             new ContentItem
+                             {
+                                  Title="ComponentB 1",
+                                  ContentType=ContentType.Component,
+                                  ComponentName="Counter"
+                             },
+                                 new ContentItem
+                             {
+                                  Title="ComponentB 2",
+                                  ContentType=ContentType.Component,
+                                  ComponentName="Counter"
+                             }
+                         }
+                    }
+                }
+            }
+     }
+    };
+
+}

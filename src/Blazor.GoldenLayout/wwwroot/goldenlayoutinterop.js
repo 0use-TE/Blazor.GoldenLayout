@@ -1,4 +1,4 @@
-export function createGoldenLayout(configuration, container) {
+ï»¿export function createGoldenLayout(configuration, container) {
     console.log('Start Create GoldenLayout');
     console.log(configuration);
     console.log('End Create GoldenLayout');
@@ -7,10 +7,10 @@ export function createGoldenLayout(configuration, container) {
 export function registerComponent(goldenLayout, dotnetObjectReference, componentName) {
     goldenLayout.registerComponent(componentName, function (container, state) {
         //console.log('Generating guid...');
-        // Éú³ÉÎ¨Ò» ID
+        // ç”Ÿæˆå”¯ä¸€ ID
         const id = crypto.randomUUID();
 
-        // ´´½¨Ò»¸ö div ÔªËØ×÷ÎªÈİÆ÷
+        // åˆ›å»ºä¸€ä¸ª div å…ƒç´ ä½œä¸ºå®¹å™¨
         const div = document.createElement('div');
         div.id = `blazor-${id}`;
         container.getElement().append(div);
@@ -26,4 +26,41 @@ export function registerComponent(goldenLayout, dotnetObjectReference, component
         }
     })
 }
-    
+
+
+export function createDragSource(goldenLayout, spawnerId, contentItem) {
+    console.log("createDragSource called:", { goldenLayout, spawnerId, contentItem });
+
+    if (!goldenLayout || typeof goldenLayout.createDragSource !== 'function') {
+        console.error("Invalid GoldenLayout instance or createDragSource not available");
+        return;
+    }
+
+    const container = document.getElementById(spawnerId);
+    if (!container) {
+        console.error(`Element with id ${spawnerId} not found`);
+        return;
+    }
+
+    // éªŒè¯ container æ˜¯ HTMLElement
+    if (!(container instanceof HTMLElement)) {
+        console.error("Container is not an HTMLElement:", container);
+        return;
+    }
+
+    // éªŒè¯ contentItem
+    if (!contentItem || !contentItem.type || !contentItem.componentName) {
+        console.error("Invalid contentItem:", contentItem);
+        return;
+    }
+
+    try {
+        container.draggable = true;
+        console.log("Set draggable=true for container:", container.id);
+
+        goldenLayout.createDragSource(container, contentItem);
+        console.log("Drag source created successfully for container:", container.id);
+    } catch (error) {
+        console.error("Error creating drag source:", error);
+    }
+}
