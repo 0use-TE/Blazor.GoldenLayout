@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace Blazor.GoldenLayout
 {
-    public class GoldenLayoutComponent
+    public class GoldenLayoutComponentService
     {
         private readonly Dictionary<Type, string> _componentMap;
 
-        public GoldenLayoutComponent(Dictionary<Type, string> components)
+        public GoldenLayoutComponentService(Dictionary<Type, string> components)
         {
             _componentMap = components;
         }

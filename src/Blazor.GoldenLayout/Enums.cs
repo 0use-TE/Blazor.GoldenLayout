@@ -24,7 +24,7 @@ namespace Blazor.GoldenLayout
 	/// <summary>
 	/// Add a new item of type X to GoldenLayout
 	/// </summary>
-	public enum GoldenLayoutSpawnerType
+    public enum GoldenLayoutSpawnerType
 	{
 		/// <summary>
 		/// Dray element to goldenlayout

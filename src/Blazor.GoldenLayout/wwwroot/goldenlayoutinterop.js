@@ -55,12 +55,22 @@ export function createDragSource(goldenLayout, spawnerId, contentItem) {
     }
 
     try {
-        container.draggable = true;
-        console.log("Set draggable=true for container:", container.id);
-
         goldenLayout.createDragSource(container, contentItem);
-        console.log("Drag source created successfully for container:", container.id);
     } catch (error) {
         console.error("Error creating drag source:", error);
     }
+}
+
+export function createBySelection(dotnetObjectReference, goldenLayout, spawnerId, contentItem) {
+    var container = document.getElementById(spawnerId);
+
+    container.addEventListener('click', function () {
+        //console.log("select")
+        if (goldenLayout.selectedItem === null) {
+            dotnetObjectReference.invokeMethodAsync('OnNoItemSelected');
+        }
+        else {
+            goldenLayout.selectedItem.addChild(contentItem);
+        }
+    });
 }

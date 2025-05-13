@@ -1,34 +1,14 @@
-﻿@page "/"
+﻿@page "/SimpleExample"
 @using Blazor.GoldenLayout
-<PageTitle>Home</PageTitle>
+<PageTitle>SimpleExample</PageTitle>
 
-<GoldenLayoutContainer Style="width:1000px;height:800px" GoldenLayoutConfiguration="layoutConfig">
+<GoldenLayoutContainer Style="width:600px;height:400px"  GoldenLayoutConfiguration="layoutConfig" >
 </GoldenLayoutContainer>
 
-<GoldenLayoutSpawner>
-    <GoldenLayoutSpawnerItem ContentItem="contentItem" SpawnerType="GoldenLayoutSpawnerType.ByDrag">添加 拖拽</GoldenLayoutSpawnerItem>
-    <GoldenLayoutSpawnerItem ContentItem="contentItem" SpawnerType="GoldenLayoutSpawnerType.BySelection">添加 选择</GoldenLayoutSpawnerItem>
-</GoldenLayoutSpawner>
+@code{
 
-@code {
-
-    private ContentItem contentItem = new ContentItem
+    private  GoldenLayoutConfiguration layoutConfig = new GoldenLayoutConfiguration
         {
-            ContentType = ContentType.Component,
-            ComponentName = "Counter",
-            Title = "添加",
-            IsClosable = true
-        };
-    private GoldenLayoutConfiguration layoutConfig = new GoldenLayoutConfiguration
-        {
-            OnNoItemSelected = () =>
-            {
-                Console.WriteLine("没有选择节点");
-            },
-            Settings = new Settings
-            {
-                SelectionEnabled = true
-            },
             Content = new List<ContentItem>
     {
         new ContentItem
@@ -66,7 +46,7 @@
                 }
             }
         }
-            }
+                }
         };
-
+  
 }

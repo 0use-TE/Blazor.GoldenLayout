@@ -12,10 +12,11 @@ namespace Blazor.GoldenLayout
 	{
 		private static Dictionary<Type, string> components=new Dictionary<Type, string>();
 
-        public static IServiceCollection RegisterGoldenLayoutService(this IServiceCollection configuration, Dictionary<Type, string> components)
+        public static IServiceCollection RegisterGoldenLayoutService(this IServiceCollection services, Dictionary<Type, string> components)
 		{
 			Extension.components = components;
-			return configuration.AddSingleton(sp => new GoldenLayoutComponent(components));
+			return  services.AddSingleton(sp => new GoldenLayoutComponentService(components)).
+				AddSingleton<GoldenLayoutEventService>();
         }
 		public static void RegisterGoldenLayoutComponent(this IJSComponentConfiguration configuration)
 		{

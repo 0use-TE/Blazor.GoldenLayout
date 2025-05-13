@@ -1,7 +1,7 @@
 ﻿@using Microsoft.JSInterop
 @inject IJSRuntime _jsRuntime
-@inject GoldenLayoutComponent GoldenLayoutComponent
-
+@inject GoldenLayoutComponentService GoldenLayoutComponentService
+@inject GoldenLayoutEventService GoldenLayoutEventService
 <div @ref=elementReference  style="@Style"  @attributes=@AdditionalAttributes>
 
 </div>
@@ -19,8 +19,10 @@
     [Parameter(CaptureUnmatchedValues = true)]
     public Dictionary<string, object> ?AdditionalAttributes { get; set; }
 
+    [Parameter]
+    public string Identify { get; set; } = string.Empty;
+
     private DotNetObjectReference<GoldenLayoutContainer>? _dotNetRef;
-    public event Func<Task>? OnGoldenLayoutInited;
 
     private class GoldenLayoutItem
     {
@@ -42,21 +44,28 @@
 
 
             _dotNetRef = DotNetObjectReference.Create(this);
-            goldenLayout = await GoldenLayout.CreateGoldenLayout(_jsRuntime, GoldenLayoutConfiguration, elementReference);
-            await goldenLayout.RegisterComponent(_dotNetRef, GoldenLayoutComponent.GetAll().Values);
+            goldenLayout = await GoldenLayout.CreateGoldenLayout(_dotNetRef, _jsRuntime, GoldenLayoutConfiguration, elementReference);
+            await goldenLayout.RegisterComponent( GoldenLayoutComponentService.GetAll().Values);
 
             await goldenLayout.Init();
 
-            OnGoldenLayoutInited?.Invoke();
+            GoldenLayoutEventService.Publish(goldenLayout,Identify);
 
             await InvokeAsync(StateHasChanged);
         }
     }
 
     [JSInvokable]
-    public async Task RegisterComponent()
+    public Task OnRegisterComponent()
     {
 
+        return Task.CompletedTask;
+    }
+    [JSInvokable]
+    public Task OnNoItemSelected()
+    {
+        GoldenLayoutConfiguration?.OnNoItemSelected?.Invoke();
+        return Task.CompletedTask;
     }
 
 }

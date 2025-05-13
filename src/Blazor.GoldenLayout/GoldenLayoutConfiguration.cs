@@ -42,6 +42,9 @@ namespace Blazor.GoldenLayout
 		/// </summary>
 		[JsonPropertyName("content")]
 		public List<ContentItem>? Content { get; set; }
-	}
+		[JsonIgnore]
+		public Action? OnNoItemSelected {  get; set; }
+
+    }
 
 }

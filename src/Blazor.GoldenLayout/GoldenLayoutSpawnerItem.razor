@@ -21,7 +21,7 @@
 	protected override async Task OnAfterRenderAsync(bool firstRender)
 	{
 		if(firstRender)
-		await RegisterGoldenLayoutSpawner();
+			await RegisterGoldenLayoutSpawner();
 	}
 
 	public async Task RegisterGoldenLayoutSpawner()
@@ -41,9 +41,6 @@
 		{
 			if (ContentItem== null||GoldenLayout==null)
 				return;
-			if (GoldenLayout.jsInterop.goldLayout == null)
-				return;
-			Console.WriteLine("Start  createDragSource");
 			await GoldenLayout.jsInterop.CreateDragSource(spawnerId, ContentItem);
 		}
 		catch(Exception ex)
@@ -51,12 +48,20 @@
 			Console.WriteLine("Error:" + ex.Message);
 		}
 
-		}
-		private async Task BySelection()
+	}
+	private async Task BySelection()
+	{
+		try
 		{
-		if (ContentItem == null)
-			return;
+			if (ContentItem == null || GoldenLayout == null)
+				return;
+			await GoldenLayout.jsInterop.CreateBySelection(spawnerId, ContentItem);
 		}
+		catch (Exception ex)
+		{
+			Console.WriteLine("Error:" + ex.Message);
+		}
+	}
 		private async Task ToElement()
 		{
 		}

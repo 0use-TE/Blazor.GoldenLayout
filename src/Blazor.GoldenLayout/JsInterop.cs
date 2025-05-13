@@ -16,6 +16,7 @@ namespace Blazor.GoldenLayout
     {
         private readonly Lazy<Task<IJSObjectReference>> moduleTask;
         public IJSObjectReference? goldLayout;
+        private DotNetObjectReference<GoldenLayoutContainer>? dotNetObject;
         public JSInterop(IJSRuntime jsRuntime)
         {
             if (jsRuntime== null)
@@ -24,12 +25,12 @@ namespace Blazor.GoldenLayout
                 "import", "./_content/Blazor.GoldenLayout/goldenlayoutinterop.js").AsTask());
         }
 
-		public async Task CreateGoldenLayoutAsync(GoldenLayoutConfiguration configuration, ElementReference container)
+		public async Task CreateGoldenLayoutAsync(DotNetObjectReference<GoldenLayoutContainer> dotNetObject,GoldenLayoutConfiguration configuration, ElementReference container)
 		{
 			var module = await moduleTask.Value;
-
-			// ≈‰÷√ JsonSerializerOptions£¨∫ˆ¬‘ null ÷µ
-			var options = new JsonSerializerOptions
+            this.dotNetObject = dotNetObject;
+            // ≈‰÷√ JsonSerializerOptions£¨∫ˆ¬‘ null ÷µ
+            var options = new JsonSerializerOptions
 			{
 				DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
 				PropertyNamingPolicy = JsonNamingPolicy.CamelCase 
@@ -42,7 +43,7 @@ namespace Blazor.GoldenLayout
 			goldLayout = await module.InvokeAsync<IJSObjectReference>("createGoldenLayout", configObject, container);
 		}
 
-        public async Task RegisterComponentAsync(DotNetObjectReference<GoldenLayoutContainer> dotNetObject, IEnumerable<string>? componentNameList)
+        public async Task RegisterComponentAsync( IEnumerable<string>? componentNameList)
         {
             if (componentNameList == null)
                 return;
@@ -80,7 +81,16 @@ namespace Blazor.GoldenLayout
                 await module.InvokeVoidAsync("createDragSource", goldLayout, spawnerId, contentItem);
             }
         }
-		public async ValueTask DisposeAsync()
+
+        public async Task CreateBySelection(string spawnerId, ContentItem contentItem)
+        {
+            if (moduleTask.IsValueCreated)
+            {
+                var module = await moduleTask.Value;
+                await module.InvokeVoidAsync("createBySelection",dotNetObject, goldLayout, spawnerId, contentItem);
+            }
+        }
+        public async ValueTask DisposeAsync()
         {
             if (moduleTask.IsValueCreated)
             {

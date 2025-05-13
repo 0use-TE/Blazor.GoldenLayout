@@ -1,17 +1,17 @@
 ﻿
-	@if(shouldRenderSpawner&&GoldenLayoutContainer!=null)
-	{
-<div style="@Style" @attributes=@AdditionalAttributes>
-	<CascadingValue Value="GoldenLayoutContainer.goldenLayout" >
-@ChildContent
-</CascadingValue>
-</div>
-	}
+@inject GoldenLayoutEventService GoldenLayoutEventService
+@if(shouldRenderSpawner&&goldenLayout!=null)
+{
+	<div style="@Style" @attributes=@AdditionalAttributes>
+		<CascadingValue Value="goldenLayout" >
+			@ChildContent
+		</CascadingValue>
+	</div>
+}
 
 @code
 {
-	[Parameter]
-	public GoldenLayoutContainer? GoldenLayoutContainer{ get; set; }
+	private GoldenLayout? goldenLayout{ get; set; }
 
 	[Parameter] public string? Style { get; set; }
 	[Parameter(CaptureUnmatchedValues = true)]
@@ -19,22 +19,23 @@
 	[Parameter]
 	public RenderFragment ?ChildContent{ get; set; }
 
+	[Parameter]
+	public string Identify { get; set; } = string.Empty;
 	private bool shouldRenderSpawner;
 
 	protected override Task OnInitializedAsync()
 	{
-		if( GoldenLayoutContainer==null)
-		{
-			Console.WriteLine("GoldenLayoutContainer为Null");
-			return Task.CompletedTask;
-		}
-		GoldenLayoutContainer.OnGoldenLayoutInited += OnGoldenLayoutInited;
+		GoldenLayoutEventService.Subscribe(OnGoldenLayoutInited);
 		return Task.CompletedTask;
-	} 
-	private async Task OnGoldenLayoutInited()
+	}
+	private async Task OnGoldenLayoutInited(GoldenLayout goldenLayout, string identify)
 	{
-		shouldRenderSpawner = true;
-		await InvokeAsync(StateHasChanged);
+		if (Identify == identify)
+		{
+			this.goldenLayout = goldenLayout;
+			shouldRenderSpawner = true;
+			await InvokeAsync(StateHasChanged);
+		}
 	}
 
 }
