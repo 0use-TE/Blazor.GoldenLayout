@@ -11,8 +11,7 @@ x![image-20250514234024670](assets/image-20250514234024670.png)
 
 #### 1. Install the NuGet package
 
-```
-bash
+```bash
 
 
 
@@ -29,8 +28,8 @@ NuGet\Install-Package Blazor.GoldenLayout -Version 1.0.0
 
 **`index.html` example:**
 
-```
-html<!DOCTYPE html>
+```html
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -65,8 +64,8 @@ html<!DOCTYPE html>
 
 **`App.razor` example:**
 
-```
-html<head>
+```html
+<head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <base href="/"/>
@@ -91,8 +90,8 @@ html<head>
 
 **For Blazor WebAssembly:**
 
-```
-csharp using Blazor.GoldenLayout;
+```csharp
+using Blazor.GoldenLayout;
 using GoldenLayoutTest;
 using GoldenLayoutTest.Pages;
 using Microsoft.AspNetCore.Components.Web;
@@ -117,8 +116,8 @@ await builder.Build().RunAsync();
 
 **For Blazor Server:**
 
-```
-csharp复制编辑using Blazor.GoldenLayout;
+```csharp
+using Blazor.GoldenLayout;
 using BlazorServer_Test.Components;
 using BlazorServer_Test.Components.Pages;
 using Microsoft.AspNetCore.Components.Web;
@@ -208,8 +207,8 @@ razor <div style="width:1000px;display: flex; gap: 12px; padding: 8px 12px; just
 
 ### 🧱 Code-Based Configuration
 
-```
-razor @page "/SimpleExample"
+```razor
+@page "/SimpleExample"
 @using Blazor.GoldenLayout
 <PageTitle>SimpleExample</PageTitle>
 
