@@ -1,8 +1,8 @@
-﻿@page "/"
+﻿@page "/DataPersistence"
 @inject IJSRuntime JSRuntime
 @using Blazor.GoldenLayout
 @using System.Text.Json
-<PageTitle>Home</PageTitle>
+<PageTitle>DataPersistence</PageTitle>
 
 <GoldenLayoutContainer @ref=goldenLayout Style="width:1000px;height:800px" GoldenLayoutConfiguration="layoutConfig" LoadGoldenLayoutCallBack="Load">
 </GoldenLayoutContainer>
@@ -56,12 +56,12 @@
     }
     private async Task Save()
     {
-        var content= await goldenLayout!.ToConfig();
-        if(content!=null)
+        var content = await goldenLayout!.ToConfig();
+        if (content != null)
         {
             var json = JsonSerializer.Serialize(content, new JsonSerializerOptions
                 {
-                    WriteIndented = true 
+                    WriteIndented = true
                 });
             await JSRuntime.InvokeVoidAsync("localStorage.setItem", "storage", json);
             Console.WriteLine(json);

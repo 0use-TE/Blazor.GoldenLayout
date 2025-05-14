@@ -1,5 +1,6 @@
 ﻿@using Microsoft.JSInterop
-@inject IJSRuntime _jsRuntime
+@using System.Text.Json
+@inject IJSRuntime JSRuntime
 @inject GoldenLayoutComponentService GoldenLayoutComponentService
 @inject GoldenLayoutEventService GoldenLayoutEventService
 <div @ref=elementReference  style="@Style"  @attributes=@AdditionalAttributes>
@@ -20,6 +21,12 @@
     public Dictionary<string, object> ?AdditionalAttributes { get; set; }
 
     [Parameter]
+    public EventCallback NoItemSelectedCallback { get; set; }
+
+    [Parameter]
+    public Func<Task<GoldenLayoutConfiguration?>>? LoadGoldenLayoutCallBack{ get; set; }
+
+    [Parameter]
     public string Identify { get; set; } = string.Empty;
 
     private DotNetObjectReference<GoldenLayoutContainer>? _dotNetRef;
@@ -33,6 +40,8 @@
     public GoldenLayout? goldenLayout;
     private ElementReference elementReference;
 
+
+
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender)
@@ -42,9 +51,17 @@
                 throw new Exception("GoldenLayoutConfiguration can not be null!");
             }
 
+            //Load
+            if(LoadGoldenLayoutCallBack!=null)
+            {
+                var config=await LoadGoldenLayoutCallBack.Invoke();
+                if(config!=null)
+                GoldenLayoutConfiguration = config;
+            }
+
 
             _dotNetRef = DotNetObjectReference.Create(this);
-            goldenLayout = await GoldenLayout.CreateGoldenLayout(_dotNetRef, _jsRuntime, GoldenLayoutConfiguration, elementReference);
+            goldenLayout = await GoldenLayout.CreateGoldenLayout(_dotNetRef, JSRuntime, GoldenLayoutConfiguration, elementReference);
             await goldenLayout.RegisterComponent( GoldenLayoutComponentService.GetAll().Values);
 
             await goldenLayout.Init();
@@ -55,17 +72,21 @@
         }
     }
 
+    public async Task<GoldenLayoutConfiguration?> ToConfig()
+    {
+        if (goldenLayout == null)
+            return null;
+        return await goldenLayout.ToConfig();
+    }
     [JSInvokable]
     public Task OnRegisterComponent()
     {
-
         return Task.CompletedTask;
     }
     [JSInvokable]
-    public Task OnNoItemSelected()
+    public async Task OnNoItemSelected()
     {
-        GoldenLayoutConfiguration?.OnNoItemSelected?.Invoke();
-        return Task.CompletedTask;
+        await NoItemSelectedCallback.InvokeAsync();
     }
 
 }

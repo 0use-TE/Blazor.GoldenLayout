@@ -2,7 +2,7 @@
 @using Blazor.GoldenLayout
 <PageTitle>AddNewItemBySelection</PageTitle>
 
-<GoldenLayoutContainer Style="width:1000px;height:800px" GoldenLayoutConfiguration="layoutConfig">
+<GoldenLayoutContainer Style="width:1000px;height:800px" GoldenLayoutConfiguration="layoutConfig" NoItemSelectedCallback="NoItemSelected">
 </GoldenLayoutContainer>
 
 <GoldenLayoutSpawner>
@@ -18,12 +18,13 @@
             Title = "添加",
             IsClosable = true
         };
+
+    private void NoItemSelected()
+    {
+        Console.WriteLine("No item is selected");
+    }
     private GoldenLayoutConfiguration layoutConfig = new GoldenLayoutConfiguration
         {
-            OnNoItemSelected = () =>
-            {
-                Console.WriteLine("没有选择节点");
-            },
             Settings = new Settings
             {
                 SelectionEnabled = true
