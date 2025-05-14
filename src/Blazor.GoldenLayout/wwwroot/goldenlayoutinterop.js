@@ -1,4 +1,35 @@
-﻿export function createGoldenLayout(dotnetObjectReference, configuration, container) {
+﻿const goldenlayout_basecss = 'basecss';
+const goldenlayout_minjs = 'minjs';
+
+function loadScriptIfNeeded(id, src) {
+    return new Promise((resolve, reject) => {
+        if (document.getElementById(id)) {
+            resolve(); 
+            return;
+        }
+        const script = document.createElement('script');
+        script.src = src;
+        script.id = id;
+        script.onload = () => resolve();
+        script.onerror = () => reject(`Failed to load script: ${src}`);
+        document.body.appendChild(script);
+    });
+}
+
+function loadCssIfNeeded(id, href) {
+    if (document.getElementById(id)) return;
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = href;
+    link.id = id;
+    document.head.appendChild(link);
+}
+
+export async function createGoldenLayout(dotnetObjectReference, configuration, container) {
+    await loadScriptIfNeeded('jquery', '_content/Blazor.GoldenLayout/jquery.min.js');
+    await loadScriptIfNeeded(goldenlayout_minjs, '_content/Blazor.GoldenLayout/goldenlayout.min.js');
+    loadCssIfNeeded(goldenlayout_basecss, '_content/Blazor.GoldenLayout/goldenlayout-base.css');
+
     const layout = new GoldenLayout(configuration, container);
 
     layout.on('initialised', () => dotnetObjectReference.invokeMethodAsync('OnInitialised'));

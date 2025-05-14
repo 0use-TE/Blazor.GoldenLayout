@@ -13,7 +13,7 @@ builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.
 
 builder.Services.RegisterGoldenLayoutService(new Dictionary<Type, string>
 {
-    { typeof(Counter), "Counter"} 
+    { typeof(Counter), "Counter"}
 });
 
 builder.RootComponents.RegisterGoldenLayoutComponent();
