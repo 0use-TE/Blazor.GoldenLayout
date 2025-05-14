@@ -19,7 +19,11 @@
             ContentType = ContentType.Component,
             ComponentName = "Counter",
             Title = "添加",
-            IsClosable = true
+            IsClosable = true,
+            ComponentState = new Dictionary<string, object>
+                    {
+                        {"Cnt",10}
+                    }
         };
     private GoldenLayoutContainer? goldenLayout;
 

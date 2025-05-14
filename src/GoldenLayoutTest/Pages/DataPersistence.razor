@@ -15,12 +15,16 @@
 @code {
 
     private ContentItem contentItem = new ContentItem
-        {
-            ContentType = ContentType.Component,
-            ComponentName = "Counter",
-            Title = "添加",
-            IsClosable = true
-        };
+    {
+        ContentType = ContentType.Component,
+        ComponentName = "Counter",
+        Title = "添加",
+        IsClosable = true,
+        ComponentState = new Dictionary<string, object>
+                    {
+                        {"Cnt",10}
+                    }
+    };
     private GoldenLayoutContainer? goldenLayout;
 
     private async Task<GoldenLayoutConfiguration?> Load()
@@ -94,16 +98,16 @@
                     Title="计数器",
                     ComponentState=new Dictionary<string, object>
                     {
-                        {"Cnt",123 }
+                        {"Cnt",0}
                     }
                 },
                 new ContentItem
                 {
                     ContentType = ContentType.Component,
                     ComponentName = "Counter",
-                    ComponentState=new Dictionary<string, object>
+                  ComponentState=new Dictionary<string, object>
                     {
-                        {"Cnt",100 }
+                        {"Cnt",0}
                     }
                 },
                 new ContentItem
@@ -112,7 +116,7 @@
                     ComponentName = "Counter",
                           ComponentState=new Dictionary<string, object>
                     {
-                        {"Cnt",10 }
+                        {"Cnt",0 }
                     }
                 }
             }
