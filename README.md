@@ -15,7 +15,7 @@ x![image-20250514234024670](assets/image-20250514234024670.png)
 bash
 
 
-复制编辑
+
 NuGet\Install-Package Blazor.GoldenLayout -Version 1.0.0
 ```
 
@@ -30,7 +30,7 @@ NuGet\Install-Package Blazor.GoldenLayout -Version 1.0.0
 **`index.html` example:**
 
 ```
-html复制编辑<!DOCTYPE html>
+html<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -66,7 +66,7 @@ html复制编辑<!DOCTYPE html>
 **`App.razor` example:**
 
 ```
-html复制编辑<head>
+html<head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <base href="/"/>
@@ -92,7 +92,7 @@ html复制编辑<head>
 **For Blazor WebAssembly:**
 
 ```
-csharp复制编辑using Blazor.GoldenLayout;
+csharp using Blazor.GoldenLayout;
 using GoldenLayoutTest;
 using GoldenLayoutTest.Pages;
 using Microsoft.AspNetCore.Components.Web;
@@ -166,7 +166,7 @@ GoldenLayout components require coordination between parent-child relationships 
  For now, please disable prerendering globally as shown below:
 
 ```
-razor复制编辑<body>
+razor <body>
 <Routes @rendermode="@(new InteractiveServerRenderMode(prerender:false))"/>
 <script src="_framework/blazor.web.js"></script>
 </body>
@@ -185,7 +185,7 @@ This project supports both **Razor component-based** and **code-based** configur
 ### 🧩 Razor Component Configuration
 
 ```
-razor复制编辑<div style="width:1000px;display: flex; gap: 12px; padding: 8px 12px; justify-content: center; background-color: #f9f9f9; border-radius: 8px; align-items: center;">
+razor <div style="width:1000px;display: flex; gap: 12px; padding: 8px 12px; justify-content: center; background-color: #f9f9f9; border-radius: 8px; align-items: center;">
     <GoldenLayoutSpawnerItem ContentItem="_counter">ByDrag</GoldenLayoutSpawnerItem>
     <GoldenLayoutSpawnerItem ContentItem="_hello" SpawnerType="GoldenLayoutSpawnerType.BySelection">BySelection</GoldenLayoutSpawnerItem>
 </div>
@@ -209,7 +209,7 @@ razor复制编辑<div style="width:1000px;display: flex; gap: 12px; padding: 8px
 ### 🧱 Code-Based Configuration
 
 ```
-razor复制编辑@page "/SimpleExample"
+razor @page "/SimpleExample"
 @using Blazor.GoldenLayout
 <PageTitle>SimpleExample</PageTitle>
 
