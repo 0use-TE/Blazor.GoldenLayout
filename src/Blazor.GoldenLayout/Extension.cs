@@ -26,5 +26,6 @@ namespace Blazor.GoldenLayout
 				configuration.RegisterForJavaScript(item.Key, item.Value);
 			}
 		}
+		
     }
 }
