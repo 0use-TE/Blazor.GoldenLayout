@@ -14,28 +14,28 @@ namespace Blazor.GoldenLayout
         /// Corresponds to JavaScript's `settings` object.
         /// </summary>
         [JsonPropertyName("settings")]
-        public Settings? Settings { get; set; }
+        public Settings Settings { get; set; } = new Settings();
 
         /// <summary>
         /// Layout dimension configurations, such as border width, header height, etc.
         /// Corresponds to JavaScript's `dimensions` object.
         /// </summary>
         [JsonPropertyName("dimensions")]
-        public Dimensions? Dimensions { get; set; }
+        public Dimensions Dimensions { get; set; } = new Dimensions();
 
         /// <summary>
         /// Text labels for the UI, such as close, maximize buttons.
         /// Corresponds to JavaScript's `labels` object.
         /// </summary>
         [JsonPropertyName("labels")]
-        public Labels? Labels { get; set; }
+        public Labels Labels { get; set; }=new Labels();
 
         /// <summary>
         /// Layout content, containing a list of content items (rows, columns, stacks, or components).
         /// Corresponds to JavaScript's `content` array.
         /// </summary>
         [JsonPropertyName("content")]
-        public List<ContentItem>? Content { get; set; }
+        public List<ContentItem> Content { get; set; } = new List<ContentItem>();
 
 
     }

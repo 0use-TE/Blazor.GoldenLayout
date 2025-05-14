@@ -35,7 +35,7 @@ public class ContentItem
     /// Corresponds to JavaScript's `content`.
     /// </summary>
     [JsonPropertyName("content")]
-    public List<ContentItem>? Content { get; set; }
+    public List<ContentItem> Content { get; set; }=new List<ContentItem>();
 
     /// <summary>
     /// A string or array of strings used to retrieve the item via `item.getItemsById()`.

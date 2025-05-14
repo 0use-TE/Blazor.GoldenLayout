@@ -8,7 +8,7 @@ namespace Blazor.GoldenLayout
 
         public async Task CreateGoldenLayout(DotNetObjectReference<GoldenLayout> dotNetObject, IJSRuntime jsRuntime, GoldenLayoutConfiguration configuration, ElementReference container)
         {
-            jsInterop = new JSInterop(JSRuntime);
+            jsInterop = new JSInterop(JsRuntime);
             await jsInterop.CreateGoldenLayoutAsync(dotNetObject, configuration, container);
         }
 

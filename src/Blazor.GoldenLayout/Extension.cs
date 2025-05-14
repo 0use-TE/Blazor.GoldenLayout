@@ -16,7 +16,8 @@ namespace Blazor.GoldenLayout
 		{
 			Extension.components = components;
 			return  services.AddSingleton(sp => new GoldenLayoutComponentService(components)).
-				AddSingleton<GoldenLayoutEventService>();
+				AddSingleton<GoldenLayoutEventService>().
+				AddSingleton<GoldenLayoutSolveRegisterService>();
         }
 		public static void RegisterGoldenLayoutComponent(this IJSComponentConfiguration configuration)
 		{

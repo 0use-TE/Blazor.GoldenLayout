@@ -1,5 +1,40 @@
-﻿<h3>GoldenLayoutStack</h3>
-
+﻿@inject  GoldenLayoutSolveRegisterService GoldenLayoutSolveRegisterService
+<CascadingValue Value="_content.Content">
+    @ChildContent
+</CascadingValue>
 @code {
+    [CascadingParameter] public List<ContentItem> Parent { get; set; } = null!;
+    [CascadingParameter] public string Identity { get; set; } = string.Empty;
+    [Parameter] public ContentItem? TemplateItem { get; set; }
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+    [Parameter] public string? ComponentName { get; set; }
+    [Parameter] public string? Title { get; set; }
+    [Parameter] public Dictionary<string, object>? ComponentState { get; set; }
+    [Parameter] public string? Id { get; set; }
+    [Parameter] public object? Width { get; set; }
+    [Parameter] public object? Height { get; set; }
+    [Parameter] public bool? IsClosable { get; set; }
+    private readonly ContentItem _content = new ContentItem();
+    [Parameter] public int? ActiveItemIndex { get; set; }
 
+    protected override void OnInitialized()
+    {
+        GoldenLayoutSolveRegisterService.RegisterGoldenLayout(Identity);
+        _content.ContentType = ContentType.Stack;
+        _content.ComponentName = ComponentName ?? TemplateItem?.ComponentName;
+        _content.Title = Title ?? TemplateItem?.Title;
+        _content.ComponentState = ComponentState ?? TemplateItem?.ComponentState;
+        _content.Id = Id ?? TemplateItem?.Id;
+        _content.Width = Width ?? TemplateItem?.Width;
+        _content.Height = Height ?? TemplateItem?.Height;
+        _content.IsClosable = IsClosable ?? TemplateItem?.IsClosable;
+        _content.ActiveItemIndex = ActiveItemIndex ?? TemplateItem?.ActiveItemIndex;
+        Parent.Add(_content);
+    }
+    protected override Task OnAfterRenderAsync(bool firstRender)
+    {
+        if(firstRender)
+            GoldenLayoutSolveRegisterService.FinshRegisteredGoldenLayout(Identity);
+        return base.OnAfterRenderAsync(firstRender);
+    }
 }

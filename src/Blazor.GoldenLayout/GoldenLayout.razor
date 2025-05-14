@@ -1,11 +1,14 @@
 ﻿@using Microsoft.JSInterop
 @using System.Text.Json
-@inject IJSRuntime JSRuntime
+@inject IJSRuntime JsRuntime
 @inject GoldenLayoutComponentService GoldenLayoutComponentService
+@inject  GoldenLayoutSolveRegisterService GoldenLayoutSolveRegisterService
 @inject GoldenLayoutEventService GoldenLayoutEventService
-<div @ref=elementReference  style="@Style"  @attributes=@AdditionalAttributes>
-    <CascadingValue Value="@(GoldenLayoutConfiguration.Content)">
+<div @ref=elementReference style="@Style" @attributes=@AdditionalAttributes>
+    <CascadingValue Value="Identity">
+    <CascadingValue Value="@(ContentItems)">
         @ChildContent
+    </CascadingValue>
     </CascadingValue>
 </div>
 

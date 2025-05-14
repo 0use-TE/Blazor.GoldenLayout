@@ -29,17 +29,17 @@ namespace Blazor.GoldenLayout
         {
             var module = await moduleTask.Value;
             this.dotNetObject = dotNetObject;
-            // ÅäÖÃ JsonSerializerOptions£¬ºöÂÔ null Öµ
+            // é…ç½® JsonSerializerOptionsï¼Œå¿½ç•¥ null å€¼
             var options = new JsonSerializerOptions
             {
                 DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase
             };
-            // ĞòÁĞ»¯Îª JSON ×Ö·û´®£¬ºöÂÔ null Öµ
+            // åºåˆ—åŒ–ä¸º JSON å­—ç¬¦ä¸²ï¼Œå¿½ç•¥ null å€¼
             string jsonConfig = JsonSerializer.Serialize(configuration, options);
-            // ·´ĞòÁĞ»¯Îª¶¯Ì¬¶ÔÏó£¬±£Áô·Ç null ÊôĞÔ
+            // ååºåˆ—åŒ–ä¸ºåŠ¨æ€å¯¹è±¡ï¼Œä¿ç•™é null å±æ€§
             object configObject = JsonSerializer.Deserialize<object>(jsonConfig, options)!;
-            // ´«µİ¶¯Ì¬¶ÔÏóºÍ container ¸ø JavaScript
+            // ä¼ é€’åŠ¨æ€å¯¹è±¡å’Œ container ç»™ JavaScript
             goldLayout = await module.InvokeAsync<IJSObjectReference>("createGoldenLayout", dotNetObject,configObject, container);
         }
 

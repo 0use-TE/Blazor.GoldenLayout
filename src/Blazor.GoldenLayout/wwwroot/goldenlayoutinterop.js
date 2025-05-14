@@ -62,7 +62,7 @@ export function registerComponent(goldenLayout, dotnetObjectReference, component
         delete state.componentName
        //console.log(state)
 
-        if (state != null) {
+        if (state) {
             Blazor.rootComponents.add(div, componentName, state);
         }
         else {

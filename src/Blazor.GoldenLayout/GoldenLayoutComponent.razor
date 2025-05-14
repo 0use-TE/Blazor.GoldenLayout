@@ -1,9 +1,11 @@
-﻿@code 
+﻿@inject  GoldenLayoutSolveRegisterService GoldenLayoutSolveRegisterService
+@code 
 {
     [CascadingParameter]
-    public ContentItem? Parent { get; set; } = null!;
+    public List<ContentItem> Parent { get; set; } = null!;
+    [CascadingParameter] public string Identity { get; set; } = string.Empty;
     [Parameter]
-    public ContentItem? TemplateItem { get; set; } // 你传进来的模板
+    public ContentItem? TemplateItem { get; set; } 
     [Parameter] public string? ComponentName { get; set; }
     [Parameter] public string? Title { get; set; }
     [Parameter] public Dictionary<string, object>? ComponentState { get; set; }
@@ -14,6 +16,7 @@
 
     protected override void OnInitialized()
     {
+        GoldenLayoutSolveRegisterService.RegisterGoldenLayout(Identity);
         var contentItem = new ContentItem
             {
                 ContentType = ContentType.Component,
@@ -26,7 +29,13 @@
                 IsClosable = IsClosable ?? TemplateItem?.IsClosable,
             };
 
-        (Parent.Content??= new List<ContentItem>()).Add(contentItem);
+        Parent.Add(contentItem);
+    }
+    protected override Task OnAfterRenderAsync(bool firstRender)
+    {
+        if(firstRender)
+            GoldenLayoutSolveRegisterService.FinshRegisteredGoldenLayout(Identity);
+        return base.OnAfterRenderAsync(firstRender);
     }
     
 }
