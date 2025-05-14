@@ -29,6 +29,7 @@ NuGet\Install-Package Blazor.GoldenLayout -Version 1.0.0
 **`index.html` example:**
 
 ```html
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -65,6 +66,7 @@ NuGet\Install-Package Blazor.GoldenLayout -Version 1.0.0
 **`App.razor` example:**
 
 ```html
+
 <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -91,6 +93,7 @@ NuGet\Install-Package Blazor.GoldenLayout -Version 1.0.0
 **For Blazor WebAssembly:**
 
 ```csharp
+
 using Blazor.GoldenLayout;
 using GoldenLayoutTest;
 using GoldenLayoutTest.Pages;
@@ -164,8 +167,8 @@ app.Run();
 GoldenLayout components require coordination between parent-child relationships that rely on cascade parameters and asynchronous initialization. When prerendering is enabled, it may cause mismatched rendering sequences and inconsistent states.
  For now, please disable prerendering globally as shown below:
 
-```
-razor <body>
+```html
+ <body>
 <Routes @rendermode="@(new InteractiveServerRenderMode(prerender:false))"/>
 <script src="_framework/blazor.web.js"></script>
 </body>
@@ -183,8 +186,8 @@ This project supports both **Razor component-based** and **code-based** configur
 
 ### 🧩 Razor Component Configuration
 
-```
-razor <div style="width:1000px;display: flex; gap: 12px; padding: 8px 12px; justify-content: center; background-color: #f9f9f9; border-radius: 8px; align-items: center;">
+```html
+ <div style="width:1000px;display: flex; gap: 12px; padding: 8px 12px; justify-content: center; background-color: #f9f9f9; border-radius: 8px; align-items: center;">
     <GoldenLayoutSpawnerItem ContentItem="_counter">ByDrag</GoldenLayoutSpawnerItem>
     <GoldenLayoutSpawnerItem ContentItem="_hello" SpawnerType="GoldenLayoutSpawnerType.BySelection">BySelection</GoldenLayoutSpawnerItem>
 </div>
@@ -207,7 +210,7 @@ razor <div style="width:1000px;display: flex; gap: 12px; padding: 8px 12px; just
 
 ### 🧱 Code-Based Configuration
 
-```razor
+```html
 @page "/SimpleExample"
 @using Blazor.GoldenLayout
 <PageTitle>SimpleExample</PageTitle>
