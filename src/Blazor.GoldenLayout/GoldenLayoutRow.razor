@@ -1,0 +1,38 @@
+﻿<CascadingValue Value="contentItem">
+    @ChildContent
+</CascadingValue>
+@code {
+    [CascadingParameter]
+    public ContentItem Parent { get; set; } = null!;
+
+    [Parameter]
+    public ContentItem? TemplateItem { get; set; } 
+    [Parameter]
+    public RenderFragment ?ChildContent{ get; set; }
+    [Parameter] public string? ComponentName { get; set; }
+    [Parameter] public string? Title { get; set; }
+    [Parameter] public Dictionary<string, object>? ComponentState { get; set; }
+    [Parameter] public string? Id { get; set; }
+    [Parameter] public object? Width { get; set; }
+    [Parameter] public object? Height { get; set; }
+    [Parameter] public bool? IsClosable { get; set; }
+     private ContentItem ?contentItem;
+    [Parameter]
+    public int? ActiveItemIndex{ get; set; }
+    protected override void OnInitialized()
+    {
+        contentItem = new ContentItem
+            {
+                ContentType = ContentType.Row,
+                ComponentName = ComponentName ?? TemplateItem?.ComponentName,
+                Title = Title ?? TemplateItem?.Title,
+                ComponentState = ComponentState ?? TemplateItem?.ComponentState,
+                Id = Id ?? TemplateItem?.Id,
+                Width = Width ?? TemplateItem?.Width,
+                Height = Height ?? TemplateItem?.Height,
+                IsClosable = IsClosable ?? TemplateItem?.IsClosable,
+                 ActiveItemIndex=ActiveItemIndex??TemplateItem?.ActiveItemIndex
+            };
+        (Parent.Content ??= new List<ContentItem>()).Add(contentItem);
+    }
+}

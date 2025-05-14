@@ -6,7 +6,7 @@ namespace Blazor.GoldenLayout
     public partial class GoldenLayout
     {
         [Parameter]
-        public GoldenLayoutConfiguration? GoldenLayoutConfiguration { get; set; }
+        public GoldenLayoutConfiguration GoldenLayoutConfiguration { get; set; } = new GoldenLayoutConfiguration();
         [Parameter]
         public string? Style { get; set; }
         [Parameter]

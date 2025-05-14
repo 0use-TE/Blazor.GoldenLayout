@@ -4,6 +4,8 @@
 @inject GoldenLayoutComponentService GoldenLayoutComponentService
 @inject GoldenLayoutEventService GoldenLayoutEventService
 <div @ref=elementReference  style="@Style"  @attributes=@AdditionalAttributes>
-
+    <CascadingValue Value="@(GoldenLayoutConfiguration.Content)">
+        @ChildContent
+    </CascadingValue>
 </div>
 

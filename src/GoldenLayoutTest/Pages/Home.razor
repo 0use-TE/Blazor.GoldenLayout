@@ -4,55 +4,15 @@
 @using System.Text.Json
 <PageTitle>Home</PageTitle>
 
-<GoldenLayout @ref=goldenLayout Style="width:1000px;height:800px" GoldenLayoutConfiguration="layoutConfig" >
+<GoldenLayout  Style="width:1000px;height:800px" >
+    <GoldenLayoutRow  >
+        <GoldenLayoutComponent ComponentName="Counter" Title="计数器"></GoldenLayoutComponent>
+    </GoldenLayoutRow>
 </GoldenLayout>
 
 
 @code {
 
 
-    private GoldenLayout? goldenLayout;
-
-    private GoldenLayoutConfiguration layoutConfig = new GoldenLayoutConfiguration
-        {
-            Content = new List<ContentItem>
-    {
-        new ContentItem
-        {
-            ContentType = ContentType.Row,
-            Content = new List<ContentItem>
-            {
-                new ContentItem
-                {
-                    ContentType = ContentType.Component,
-                    ComponentName = "Counter",
-                    Title="计数器",
-                    ComponentState=new Dictionary<string, object>
-                    {
-                        {"Cnt",123 }
-                    }
-                },
-                new ContentItem
-                {
-                    ContentType = ContentType.Component,
-                    ComponentName = "Counter",
-                    ComponentState=new Dictionary<string, object>
-                    {
-                        {"Cnt",100 }
-                    }
-                },
-                new ContentItem
-                {
-                    ContentType = ContentType.Component,
-                    ComponentName = "Counter",
-                          ComponentState=new Dictionary<string, object>
-                    {
-                        {"Cnt",10 }
-                    }
-                }
-            }
-        }
-            }
-        };
 
 }

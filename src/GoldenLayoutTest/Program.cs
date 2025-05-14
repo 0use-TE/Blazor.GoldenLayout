@@ -16,6 +16,7 @@ builder.Services.RegisterGoldenLayoutService(new Dictionary<Type, string>
     { typeof(Counter), "Counter"}
 });
 
+
 builder.RootComponents.RegisterGoldenLayoutComponent();
 
 await builder.Build().RunAsync();

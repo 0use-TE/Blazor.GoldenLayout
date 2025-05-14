@@ -1,0 +1,32 @@
+﻿@code 
+{
+    [CascadingParameter]
+    public ContentItem? Parent { get; set; } = null!;
+    [Parameter]
+    public ContentItem? TemplateItem { get; set; } // 你传进来的模板
+    [Parameter] public string? ComponentName { get; set; }
+    [Parameter] public string? Title { get; set; }
+    [Parameter] public Dictionary<string, object>? ComponentState { get; set; }
+    [Parameter] public string? Id { get; set; }
+    [Parameter] public object? Width { get; set; }
+    [Parameter] public object? Height { get; set; }
+    [Parameter] public bool? IsClosable { get; set; }
+
+    protected override void OnInitialized()
+    {
+        var contentItem = new ContentItem
+            {
+                ContentType = ContentType.Component,
+                ComponentName = ComponentName ?? TemplateItem?.ComponentName,
+                Title = Title ?? TemplateItem?.Title,
+                ComponentState = ComponentState ?? TemplateItem?.ComponentState,
+                Id = Id ?? TemplateItem?.Id,
+                Width = Width ?? TemplateItem?.Width,
+                Height = Height ?? TemplateItem?.Height,
+                IsClosable = IsClosable ?? TemplateItem?.IsClosable,
+            };
+
+        (Parent.Content??= new List<ContentItem>()).Add(contentItem);
+    }
+    
+}
