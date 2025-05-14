@@ -4,8 +4,8 @@
 @using System.Text.Json
 <PageTitle>DataPersistence</PageTitle>
 
-<GoldenLayoutContainer @ref=goldenLayout Style="width:1000px;height:800px" GoldenLayoutConfiguration="layoutConfig" LoadGoldenLayoutCallBack="Load">
-</GoldenLayoutContainer>
+<GoldenLayout @ref=goldenLayout Style="width:1000px;height:800px" GoldenLayoutConfiguration="layoutConfig" LoadGoldenLayoutCallBack="Load">
+</GoldenLayout>
 
 <GoldenLayoutSpawner>
     <GoldenLayoutSpawnerItem ContentItem="contentItem">Add the Counter of Component</GoldenLayoutSpawnerItem>
@@ -25,7 +25,7 @@
                         {"Cnt",10}
                     }
     };
-    private GoldenLayoutContainer? goldenLayout;
+    private GoldenLayout? goldenLayout;
 
     private async Task<GoldenLayoutConfiguration?> Load()
     {

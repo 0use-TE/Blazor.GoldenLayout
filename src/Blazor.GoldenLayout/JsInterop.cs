@@ -16,7 +16,7 @@ namespace Blazor.GoldenLayout
     {
         private readonly Lazy<Task<IJSObjectReference>> moduleTask;
         public IJSObjectReference? goldLayout;
-        private DotNetObjectReference<GoldenLayoutContainer>? dotNetObject;
+        private DotNetObjectReference<GoldenLayout>? dotNetObject;
         public JSInterop(IJSRuntime jsRuntime)
         {
             if (jsRuntime == null)
@@ -25,7 +25,7 @@ namespace Blazor.GoldenLayout
                 "import", "./_content/Blazor.GoldenLayout/goldenlayoutinterop.js").AsTask());
         }
 
-        public async Task CreateGoldenLayoutAsync(DotNetObjectReference<GoldenLayoutContainer> dotNetObject, GoldenLayoutConfiguration configuration, ElementReference container)
+        public async Task CreateGoldenLayoutAsync(DotNetObjectReference<GoldenLayout> dotNetObject, GoldenLayoutConfiguration configuration, ElementReference container)
         {
             var module = await moduleTask.Value;
             this.dotNetObject = dotNetObject;
@@ -40,7 +40,7 @@ namespace Blazor.GoldenLayout
             // 反序列化为动态对象，保留非 null 属性
             object configObject = JsonSerializer.Deserialize<object>(jsonConfig, options)!;
             // 传递动态对象和 container 给 JavaScript
-            goldLayout = await module.InvokeAsync<IJSObjectReference>("createGoldenLayout", configObject, container);
+            goldLayout = await module.InvokeAsync<IJSObjectReference>("createGoldenLayout", dotNetObject,configObject, container);
         }
 
         public async Task RegisterComponentAsync(IEnumerable<string>? componentNameList)
@@ -78,7 +78,7 @@ namespace Blazor.GoldenLayout
             if (moduleTask.IsValueCreated)
             {
                 var module = await moduleTask.Value;
-                await module.InvokeVoidAsync("createDragSource", goldLayout, spawnerId, contentItem);
+                await module.InvokeVoidAsync("createDragSource", dotNetObject,goldLayout, spawnerId, contentItem);
             }
         }
 
@@ -105,5 +105,6 @@ namespace Blazor.GoldenLayout
                 return null;
             return await goldLayout.InvokeAsync<GoldenLayoutConfiguration>("toConfig");
         }
+  
     }
 }

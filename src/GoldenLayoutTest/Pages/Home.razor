@@ -4,86 +4,17 @@
 @using System.Text.Json
 <PageTitle>Home</PageTitle>
 
-<GoldenLayoutContainer @ref=goldenLayout Style="width:1000px;height:800px" GoldenLayoutConfiguration="layoutConfig" LoadGoldenLayoutCallBack="Load">
-</GoldenLayoutContainer>
+<GoldenLayout @ref=goldenLayout Style="width:1000px;height:800px" GoldenLayoutConfiguration="layoutConfig" >
+</GoldenLayout>
 
-<GoldenLayoutSpawner>
-    <GoldenLayoutSpawnerItem ContentItem="contentItem">Add the Counter of Component</GoldenLayoutSpawnerItem>
-</GoldenLayoutSpawner>
 
-<button @onclick=Save>Save Layout</button>
 @code {
 
-    private ContentItem contentItem = new ContentItem
-        {
-            ContentType = ContentType.Component,
-            ComponentName = "Counter",
-            Title = "添加",
-            IsClosable = true,
-            ComponentState = new Dictionary<string, object>
-                    {
-                        {"Cnt",10}
-                    }
-        };
-    private GoldenLayoutContainer? goldenLayout;
 
-    private async Task<GoldenLayoutConfiguration?> Load()
-    {
-        try
-        {
-            var load = await JSRuntime.InvokeAsync<string>("localStorage.getItem", "storage");
-            if (!string.IsNullOrEmpty(load))
-            {
-                var GoldenLayoutConfiguration = JsonSerializer.Deserialize<GoldenLayoutConfiguration>(load);
-
-                if (GoldenLayoutConfiguration != null)
-                {
-                    return GoldenLayoutConfiguration;
-                }
-                else
-                {
-                    Console.WriteLine("Failed to deserialize the configuration: layoutConfig is null.");
-                }
-                return null;
-            }
-            else
-            {
-                Console.WriteLine("Load failed - no data found in localStorage.");
-                return null;
-            }
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine(ex.Message);
-            return null;
-        }
-    }
-    private async Task Save()
-    {
-        var content= await goldenLayout!.ToConfig();
-        if(content!=null)
-        {
-            var json = JsonSerializer.Serialize(content, new JsonSerializerOptions
-                {
-                    WriteIndented = true 
-                });
-            await JSRuntime.InvokeVoidAsync("localStorage.setItem", "storage", json);
-            Console.WriteLine(json);
-
-        }
-        else
-        {
-            Console.WriteLine("save failed");
-        }
-    }
-
+    private GoldenLayout? goldenLayout;
 
     private GoldenLayoutConfiguration layoutConfig = new GoldenLayoutConfiguration
         {
-            Settings = new Settings
-            {
-                SelectionEnabled = true
-            },
             Content = new List<ContentItem>
     {
         new ContentItem

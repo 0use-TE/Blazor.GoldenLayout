@@ -1,9 +1,22 @@
-﻿export function createGoldenLayout(configuration, container) {
-    console.log('Start Create GoldenLayout');
-    console.log(configuration);
-    console.log('End Create GoldenLayout');
-    return new GoldenLayout(configuration, container);
+﻿export function createGoldenLayout(dotnetObjectReference, configuration, container) {
+    const layout = new GoldenLayout(configuration, container);
+
+    layout.on('initialised', () => dotnetObjectReference.invokeMethodAsync('OnInitialised'));
+    layout.on('stateChanged', () => dotnetObjectReference.invokeMethodAsync('OnStateChanged'));
+    layout.on('windowOpened', () => dotnetObjectReference.invokeMethodAsync('OnWindowOpened'));
+    layout.on('windowClosed', () => dotnetObjectReference.invokeMethodAsync('OnWindowClosed'));
+    layout.on('selectionChanged', () => dotnetObjectReference.invokeMethodAsync('OnSelectionChanged'));
+    layout.on('itemDestroyed', () => dotnetObjectReference.invokeMethodAsync('OnItemDestroyed'));
+    layout.on('itemCreated', () => dotnetObjectReference.invokeMethodAsync('OnItemCreated'));
+    layout.on('componentCreated', () => dotnetObjectReference.invokeMethodAsync('OnComponentCreated'));
+    layout.on('rowCreated', () => dotnetObjectReference.invokeMethodAsync('OnRowCreated'));
+    layout.on('columnCreated', () => dotnetObjectReference.invokeMethodAsync('OnColumnCreated'));
+    layout.on('stackCreated', () => dotnetObjectReference.invokeMethodAsync('OnStackCreated'));
+    layout.on('tabCreated', () => dotnetObjectReference.invokeMethodAsync('OnTabCreated'));
+
+    return layout;
 }
+
 export function registerComponent(goldenLayout, dotnetObjectReference, componentName) {
     goldenLayout.registerComponent(componentName, function (container, state) {
         //console.log('Generating guid...');
@@ -28,31 +41,11 @@ export function registerComponent(goldenLayout, dotnetObjectReference, component
 }
 
 
-export function createDragSource(goldenLayout, spawnerId, contentItem) {
+export function createDragSource(dotnetObjectReference,goldenLayout, spawnerId, contentItem) {
     console.log("createDragSource called:", { goldenLayout, spawnerId, contentItem });
 
-    if (!goldenLayout || typeof goldenLayout.createDragSource !== 'function') {
-        console.error("Invalid GoldenLayout instance or createDragSource not available");
-        return;
-    }
 
     const container = document.getElementById(spawnerId);
-    if (!container) {
-        console.error(`Element with id ${spawnerId} not found`);
-        return;
-    }
-
-    // 验证 container 是 HTMLElement
-    if (!(container instanceof HTMLElement)) {
-        console.error("Container is not an HTMLElement:", container);
-        return;
-    }
-
-    // 验证 contentItem
-    if (!contentItem || !contentItem.type || !contentItem.componentName) {
-        console.error("Invalid contentItem:", contentItem);
-        return;
-    }
 
     try {
         goldenLayout.createDragSource(container, contentItem);

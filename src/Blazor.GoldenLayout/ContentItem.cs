@@ -80,4 +80,6 @@ public class ContentItem
     [JsonPropertyName("activeItemIndex")]
     public int? ActiveItemIndex { get; set; }
 
+
+
 }

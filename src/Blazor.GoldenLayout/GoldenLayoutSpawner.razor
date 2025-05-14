@@ -11,7 +11,6 @@
 @code
 {
 	private GoldenLayout? goldenLayout{ get; set; }
-
 	[Parameter] public string? Style { get; set; }
 	[Parameter(CaptureUnmatchedValues = true)]
 	public Dictionary<string, object>? AdditionalAttributes { get; set; }
@@ -19,7 +18,7 @@
 	public RenderFragment ?ChildContent{ get; set; }
 
 	[Parameter]
-	public string Identify { get; set; } = string.Empty;
+	public string Identity { get; set; } = string.Empty;
 	private bool shouldRenderSpawner;
 
 	protected override Task OnInitializedAsync()
@@ -27,9 +26,9 @@
 		GoldenLayoutEventService.Subscribe(OnGoldenLayoutInited);
 		return Task.CompletedTask;
 	}
-	private async Task OnGoldenLayoutInited(GoldenLayout goldenLayout, string identify)
+	private async Task OnGoldenLayoutInited(GoldenLayout goldenLayout, string identity)
 	{
-		if (Identify == identify)
+		if (Identity == identity)
 		{
 			this.goldenLayout = goldenLayout;
 			shouldRenderSpawner = true;
