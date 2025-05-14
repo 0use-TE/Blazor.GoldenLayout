@@ -4,6 +4,13 @@
 	  <TargetFrameworks>net8.0;net9.0</TargetFrameworks>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <Title>Blazor.GoldenLayout</Title>
+    <Authors>Ouse</Authors>
+    <Company>student</Company>
+    <Description>https://github.com/0use-TE/Blazor.GoldenLayout</Description>
+    <PackageProjectUrl>https://github.com/0use-TE/Blazor.GoldenLayout</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/0use-TE/Blazor.GoldenLayout</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
   </PropertyGroup>
 
 

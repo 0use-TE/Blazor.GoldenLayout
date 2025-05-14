@@ -9,6 +9,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
+
+//Start
 builder.Services.RegisterGoldenLayoutService(new Dictionary<Type, string>
 {
     { typeof(Counter), "Counter"},
@@ -19,7 +21,7 @@ builder.Services.AddServerSideBlazor(options =>
 {
     options.RootComponents.RegisterGoldenLayoutComponent();
 });
-
+//End
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
