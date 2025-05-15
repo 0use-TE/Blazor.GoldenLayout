@@ -12,7 +12,7 @@ This is a **Blazor wrapper for GoldenLayout.js**, which helps you create dockabl
 #### 1️⃣ Install NuGet Package
 
 ```bash
-NuGet\Install-Package Blazor.GoldenLayout -Version 1.0.0
+Install-Package Blazor.GoldenLayout
 ```
 
 #### 2️⃣ Add Theme CSS
