@@ -1,5 +1,4 @@
-﻿@inject  GoldenLayoutSolveRegisterService GoldenLayoutSolveRegisterService
-<CascadingValue Value="_content.Content">
+﻿<CascadingValue Value="_content.Content">
     @ChildContent
 </CascadingValue>
 @code {
@@ -19,7 +18,6 @@
 
     protected override void OnInitialized()
     {
-        GoldenLayoutSolveRegisterService.RegisterGoldenLayout(Identity);
         _content.ContentType = ContentType.Stack;
         _content.ComponentName = ComponentName ?? TemplateItem?.ComponentName;
         _content.Title = Title ?? TemplateItem?.Title;
@@ -30,11 +28,5 @@
         _content.IsClosable = IsClosable ?? TemplateItem?.IsClosable;
         _content.ActiveItemIndex = ActiveItemIndex ?? TemplateItem?.ActiveItemIndex;
         Parent.Add(_content);
-    }
-    protected override Task OnAfterRenderAsync(bool firstRender)
-    {
-        if(firstRender)
-            GoldenLayoutSolveRegisterService.FinshRegisteredGoldenLayout(Identity);
-        return base.OnAfterRenderAsync(firstRender);
     }
 }

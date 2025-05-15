@@ -30,30 +30,19 @@ namespace Blazor.GoldenLayout
             public string? Id { get; set; }
         }
 
-        protected override void OnInitialized()
-        {
-            GoldenLayoutSolveRegisterService.RegisterGoldenLayoutFinish(CreateGoldenLayout);
-        }
-
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
             if (firstRender)
             {
                 if (GoldenLayoutConfiguration == null)
-                {
                     throw new Exception("GoldenLayoutConfiguration can not be null!");
-                }
          
-                if (ChildContent == null)
-                    await CreateGoldenLayout(Identity);
+                await CreateGoldenLayout();
             }
         }
 
-        public async Task CreateGoldenLayout(string identity )
+        public async Task CreateGoldenLayout()
         {
-            if(this.Identity!=identity)
-                return;
-
             if (ContentItems.Count > 0)
                 GoldenLayoutConfiguration.Content = ContentItems;
             

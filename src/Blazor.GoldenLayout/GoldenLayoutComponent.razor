@@ -1,5 +1,4 @@
-﻿@inject  GoldenLayoutSolveRegisterService GoldenLayoutSolveRegisterService
-@code 
+﻿@code 
 {
     [CascadingParameter]
     public List<ContentItem> Parent { get; set; } = null!;
@@ -16,7 +15,6 @@
 
     protected override void OnInitialized()
     {
-        GoldenLayoutSolveRegisterService.RegisterGoldenLayout(Identity);
         var contentItem = new ContentItem
             {
                 ContentType = ContentType.Component,
@@ -31,11 +29,6 @@
 
         Parent.Add(contentItem);
     }
-    protected override Task OnAfterRenderAsync(bool firstRender)
-    {
-        if(firstRender)
-            GoldenLayoutSolveRegisterService.FinshRegisteredGoldenLayout(Identity);
-        return base.OnAfterRenderAsync(firstRender);
-    }
+
     
 }
