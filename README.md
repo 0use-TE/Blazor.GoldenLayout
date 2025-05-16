@@ -1,97 +1,193 @@
 ## 👉 [查看中文文档](README_cn.md)
 
-Hi, I'm **Ouse**. Welcome to this library!
+- 🌟 Welcome to Blazor.GoldenLayout
 
-This is a **Blazor wrapper for GoldenLayout.js**, which helps you create dockable, resizable layouts in your Blazor applications.
- A huge thanks to the GoldenLayout team for their amazing work! 🙌
+  Hello, I'm **Ouse**, and welcome to this library!
 
-------
+  This is a **Blazor wrapper for GoldenLayout.js**, enabling you to easily implement draggable, IDE-like split-panel layouts in your Blazor projects.  
+  Special thanks to the GoldenLayout development team for their amazing work! 👏
 
-### ✨ Quick Start
+  ![image](assets/image-20250514234024670.png)
 
-#### 1️⃣ Install NuGet Package
+  ------
 
-```bash
-NuGet\Install-Package Blazor.GoldenLayout -Version 1.0.0
-```
+  ## ✨ Quick Start
 
-#### 2️⃣ Add Theme CSS
+  ### 1️⃣ Install the NuGet Package
 
-Add your preferred theme to `index.html` (Blazor Wasm) or `App.razor` (Blazor Web App).
- JS files will be injected dynamically.
+  ```bash
+  NuGet\Install-Package Blazor.GoldenLayout -Version 1.0.0
+  ```
 
-**Example (dark theme):**
+  ------
 
-```html
-<link type="text/css" rel="stylesheet" href="_content/Blazor.GoldenLayout/goldenlayout-dark-theme.css" />
-```
+  ### 2️⃣ Add Theme Styles
 
-#### 3️⃣ Register Components
+  Simply add your preferred theme stylesheet, and the JS file will be dynamically loaded at runtime.  
+  For **Blazor WASM** projects, add the following to `wwwroot/index.html`:
 
-In `Program.cs`, register your components like this:
+  ```html
+  <link type="text/css" rel="stylesheet" href="_content/Blazor.GoldenLayout/goldenlayout-dark-theme.css" />
+  ```
 
-**For Blazor WebAssembly:**
+  For **Blazor Server** projects (.NET 8 Blazor Web App), add the same link to the `<head>` section in `App.razor`:
 
-```csharp
-builder.Services.RegisterGoldenLayoutService(new Dictionary<Type, string>
-{
-    { typeof(Counter), "Counter"},
-    { typeof(HelloWorld), "HelloWorld"},
-});
-builder.RootComponents.RegisterGoldenLayoutComponent();
-```
+  ```html
+  <head>
+      <link type="text/css" rel="stylesheet" href="_content/Blazor.GoldenLayout/goldenlayout-dark-theme.css" />
+  </head>
+  ```
 
-**For Blazor Server:**
+  ------
 
-```csharp
-builder.Services.RegisterGoldenLayoutService(new Dictionary<Type, string>
-{
-    { typeof(Counter), "Counter"},
-    { typeof(HelloWorld), "HelloWorld"},
-});
+  ### 3️⃣ Register Component Services
 
-builder.Services.AddServerSideBlazor(options =>
-{
-    options.RootComponents.RegisterGoldenLayoutComponent();
-});
-```
+  In `Program.cs`, register your component types and their names (used in GoldenLayout configuration):
 
-#### 4️⃣ Disable Prerendering (If enabled)
+  #### ✅ Blazor WebAssembly:
 
-Due to lifecycle differences, **prerendering must be disabled** for now to avoid duplicate component registration.
+  ```csharp
+  builder.Services.RegisterGoldenLayoutService(new Dictionary<Type, string>
+  {
+      { typeof(Counter), "Counter"},
+      { typeof(HelloWorld), "HelloWorld"},
+  });
+  builder.RootComponents.RegisterGoldenLayoutComponent();
+  ```
 
-```html
-<body>
-    <Routes @rendermode="@(new InteractiveServerRenderMode(prerender: false))" />
-    <script src="_framework/blazor.web.js"></script>
-</body>
-```
+  #### ✅ Blazor Server:
 
-------
+  ```csharp
+  builder.Services.RegisterGoldenLayoutService(new Dictionary<Type, string>
+  {
+      { typeof(Counter), "Counter"},
+      { typeof(HelloWorld), "HelloWorld"},
+  });
+  
+  builder.Services.AddServerSideBlazor(options =>
+  {
+      options.RootComponents.RegisterGoldenLayoutComponent();
+  });
+  ```
 
-### 🧩 Razor-Based Layout Example
+  ------
 
-See the Chinese version above for a detailed Razor example.
+  ### 4️⃣ Disable Prerendering (If Enabled)
 
-------
+  **If prerendering is enabled, you need to disable it**, as it may cause components to be registered multiple times. Prerendering support is currently under development. You can disable it globally or for specific pages:
 
-### 🔧 C#-Based Layout Configuration
+  #### ✅ Globally Disable Prerendering (Blazor Web App):
 
-Also see the code example in the Chinese section.
+  ```html
+  <body>
+      <Routes @rendermode="@(new InteractiveServerRenderMode(prerender: false))" />
+      <script src="_framework/blazor.web.js"></script>
+  </body>
+  ```
 
-------
+  ------
 
-### 💡 How It Works
+  ### 5️⃣ Usage
 
-This library is built as a Blazor wrapper over GoldenLayout's JavaScript API, but supports **declarative Razor syntax** to make layout definition more Blazor-friendly.
+  Two approaches are supported:
 
-*More technical documentation coming soon!*
+  - 🧩 Razor Component Approach (Declarative Configuration)
+  - 🔧 Code-Based Approach (Pure C# Configuration)
 
-------
+  ------
 
-### 🔮 Roadmap
+  ### 🧩 Razor Declarative Configuration Example:
 
-- More API coverage
-- GitHub Pages + live preview
-- Automatic handling of prerendering
-- Lazy loading + component registry improvements
+  ```csharp
+  <GoldenLayoutSpawner>
+      <div style="width:1000px;display: flex; gap: 12px; padding: 8px 12px; justify-content: center; background-color: #f9f9f9; border-radius: 8px; align-items: center;">
+          <GoldenLayoutSpawnerItem ContentItem="_counter">ByDrag</GoldenLayoutSpawnerItem>
+          <GoldenLayoutSpawnerItem ContentItem="_hello" SpawnerType="GoldenLayoutSpawnerType.BySelection">BySelection</GoldenLayoutSpawnerItem>
+      </div>
+  </GoldenLayoutSpawner>
+  
+  <GoldenLayout Style="width:1000px;height:800px" GoldenLayoutConfiguration="_configuration" SelectionChangedCallback="SelectionChangedCallback">
+      <GoldenLayoutRow Title="Row">
+          <GoldenLayoutStack>
+              <GoldenLayoutComponent ComponentName="Counter" Title="Counter" />
+              <GoldenLayoutComponent ComponentName="HelloWorld" Title="Hello" />
+              <GoldenLayoutComponent ComponentName="Counter" Title="Counter" />
+          </GoldenLayoutStack>
+          <GoldenLayoutComponent ComponentName="HelloWorld" Title="Hello" />
+          <GoldenLayoutComponent ComponentName="HelloWorld" Title="Hello" />
+      </GoldenLayoutRow>
+  </GoldenLayout>
+  ```
+
+  ------
+
+  ### 🔧 Code-Based Configuration Example:
+
+  ```csharp
+  @page "/SimpleExample"
+  @using Blazor.GoldenLayout
+  <PageTitle>SimpleExample</PageTitle>
+  
+  <GoldenLayout Style="width:600px;height:400px" GoldenLayoutConfiguration="layoutConfig" />
+  
+  @code {
+      private GoldenLayoutConfiguration layoutConfig = new()
+      {
+          Content = new List<ContentItem>
+          {
+              new ContentItem
+              {
+                  ContentType = ContentType.Row,
+                  Content = new List<ContentItem>
+                  {
+                      new ContentItem
+                      {
+                          ContentType = ContentType.Component,
+                          ComponentName = "Counter",
+                          Title = "Counter",
+                          ComponentState = new Dictionary<string, object> { { "Cnt", 123 } }
+                      },
+                      new ContentItem
+                      {
+                          ContentType = ContentType.Component,
+                          ComponentName = "Counter",
+                          ComponentState = new Dictionary<string, object> { { "Cnt", 100 } }
+                      },
+                      new ContentItem
+                      {
+                          ContentType = ContentType.Component,
+                          ComponentName = "Counter",
+                          ComponentState = new Dictionary<string, object> { { "Cnt", 10 } }
+                      }
+                  }
+              }
+          }
+      };
+  }
+  ```
+
+  ------
+
+  ## 🧠 How It Works
+
+  This project wraps JavaScript operations with Blazor, while supporting declarative layout configuration, making the component more aligned with the Blazor style.
+
+  *To be continued...*
+
+  ------
+
+  ## 📚 API Documentation
+
+  Documentation is under development. Stay tuned!
+
+  ------
+
+  ## 🌈 Future Plans
+
+  - ✅ Add more GoldenLayout API wrappers
+  - ✅ Provide sample projects and GitHub Pages previews
+  - 🔄 Support automatic adaptation for prerendering
+  - ✅ Support lazy loading and dynamic component registration
+  - 🚀 Contributions via PRs or issues are welcome!
+
+  

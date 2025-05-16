@@ -11,6 +11,7 @@
     <PackageProjectUrl>https://github.com/0use-TE/Blazor.GoldenLayout</PackageProjectUrl>
     <RepositoryUrl>https://github.com/0use-TE/Blazor.GoldenLayout</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
+    <Version>1.0.1</Version>
   </PropertyGroup>
 
 

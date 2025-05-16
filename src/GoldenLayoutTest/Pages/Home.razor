@@ -12,17 +12,23 @@
 </GoldenLayoutSpawner>
 
 <GoldenLayout Style="width:1000px;height:800px" GoldenLayoutConfiguration="_configuration" SelectionChangedCallback="SelectionChangedCallback">
+    <GoldenLayoutColumn>
     <GoldenLayoutRow Title="Row">
         
         <GoldenLayoutStack>
             <GoldenLayoutComponent ComponentName="Counter" Title="计数器"></GoldenLayoutComponent>
             <GoldenLayoutComponent ComponentName="HelloWorld" Title="Hello"></GoldenLayoutComponent>
-            <GoldenLayoutComponent ComponentName="Counter" Title="计数器"></GoldenLayoutComponent>
+            <GoldenLayoutComponent ComponentName="Counter" Title="计数器" ></GoldenLayoutComponent>
         </GoldenLayoutStack>
 
         <GoldenLayoutComponent ComponentName="HelloWorld" Title="Hello"></GoldenLayoutComponent>
         <GoldenLayoutComponent ComponentName="HelloWorld" Title="Hello"></GoldenLayoutComponent>
     </GoldenLayoutRow>
+    <GoldenLayoutStack>
+            <GoldenLayoutComponent ComponentName="HelloWorld" Title="Hello"></GoldenLayoutComponent>
+            <GoldenLayoutComponent ComponentName="Counter" Title="计数器"></GoldenLayoutComponent>
+    </GoldenLayoutStack>
+    </GoldenLayoutColumn>
 </GoldenLayout>
 
 @code
