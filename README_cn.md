@@ -16,7 +16,7 @@
 ### 1️⃣ 安装 NuGet 包
 
 ```bash
-NuGet\Install-Package Blazor.GoldenLayout -Version 1.0.0
+Install-Package Blazor.GoldenLayout
 ```
 
 ------
