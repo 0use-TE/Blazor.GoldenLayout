@@ -25,8 +25,11 @@ jobs:
 
       # Publish the site
       - name: Publish
-        run: dotnet publish src/GoldenLayoutTest/GoldenLayoutTest.csproj -c Release -o publish -p:GHPages=true -p:StaticWebAssetsBasePath=/Blazor.GoldenLayout/
-
+        run: dotnet publish src/GoldenLayoutTest/GoldenLayoutTest.csproj -c Release -o publish -p:GHPages=true
+        
+      - name: Fix base href in index.html
+        run: |
+          sed -i 's|<base href=".*" />|<base href="/Blazor.GoldenLayout/" />|' publish/index.html
 
       # Deploy the site
       - name: Deploy
