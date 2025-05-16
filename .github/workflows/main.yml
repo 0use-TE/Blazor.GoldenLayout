@@ -25,7 +25,8 @@ jobs:
 
       # Publish the site
       - name: Publish
-        run: dotnet publish src/GoldenLayoutTest/GoldenLayoutTest.csproj -c:Release -o:publish -p:GHPages=true
+        run: dotnet publish src/GoldenLayoutTest/GoldenLayoutTest.csproj -c Release -o publish -p:GHPages=true -p:StaticWebAssetsBasePath=/Blazor.GoldenLayout/
+
 
       # Deploy the site
       - name: Deploy
